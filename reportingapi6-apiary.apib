@@ -78,22 +78,19 @@ A Webhook is an HTTP callback that is triggered when an event takes place.
 > **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 Paysafe will attempt a maximum of three times to deliver the report if your webhook is unreachable. You are responsible for ensuring its continued availability.
 
-## Webhooks Signature
+You will receive the following webhook payload for the specified callback URL. The payload contains a link from where you can download the report. The following payload sample illustrates this: 
 
-The webhook notification contains a signature header calculated using the following algorithm:
-
+```{
+  "report": {
+    "requestId": "6cd9b563-65fa-460e-9052-c823d2d3f331",
+    "status": "SUCCEEDED",
+    "files": [
+      "https://paysafe-ss-analytics-425904413889-ca-central-1-reports-qa.s3.ca-central-1.amazonaws.com/reportOutputs/2020_11/6cd9b563-65fa-460e-9052-c823d2d3f331/c31f2940-a47a-4130-9e4b-8d2e74ed953b.csv?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEH8aDGNhLWNlbnRyYWwtMSJIMEYCIQDGG3%2FyS7K4R59MsMXXzgKLw%2FDAh8ILeKp%2FUDu%2Bn8DSJQIhAP2K8hOWjoa1DYmlMXQ%2FvfUYiGtEdSRxFp5RNDlNQPGCKuQBCNj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQARoMNDI1OTA0NDEzODg5IgxDZRA6dZ8Ai481qOUquAELY07QhRpQPEpnKCMmIPMW6JQBWB1qafLlpSfmKOFGy2TAoHRP7Lwp1wauyw9fW2qY4BB8GVo7mgwSc03eD8MrdMtHC%2BfNfRmBvUpNfP%2Fh8byanykctPSZr%2BVn1JSkGJcJET5Jqj%2FJQWf04Ui7Sqp8kWPKs1x8SUu%2F7RTRRhunYOkaZqoGgjM5op6%2BX613zVM%2BsBpoytacBEicK3TpQM4ePw%2B2ck7ZoHpthQn3gS1rqGnoda3YnZ4tMK6Ci%2F0FOt8B6puJPY9d%2F8u6UOVC9AtOrJXCq%2FQmdfeg3SPM2gBa55CfOs4ce3n4n%2BOavfWRuTxEmcb84D4aBrbTXjCCD2WrqPp0f73Ijw63ubnMOlmAeg20hnDPToBsb9c0KMwTAgIE1xrXvrnqwV0yAWrWw4CE%2B3Pmm0dZYjLLj52KZDEQiDGxIUDR9jXJlDsb8X%2BBXEdoQpiot4rehJCgCQ540hmE5vVg9Md%2Bs%2FsN8wxo5G26ay3Iag6rqDbF1oFf%2FommFJwUFAQ60nlrw42ZeKIAVsKhWUkoIJqjV2YVZvQERovfpg%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201104T145657Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=ASIAWGKPBTTA5RDZU7HA%2F20201104%2Fca-central-1%2Fs3%2Faws4_request&X-Amz-Signature=10833392cf76b5db1852f82631352163331d0d9d00c7410cf5e901f6ab3f3801"
+    ]
+  }
+}
 ```
-digest = HMAC_SHA256 (hmacKey, UTF 8 string containing the JSON webhook request body)
-
-signature = base 64 (digest)
-```
-
-The code receiving the webhook needs to repeat this algorithm and compare the value generated with the value received in the header.
-
-Example Header:
-
-```
-Signature: UMaQ4h635wUc4hp60Z5ASBC/5UtqKybAldOkLv6ngc0=
+> **Note:** You can download the reports for a pre-defined period (up to seven days). 
 ```
 
 # Error Summary
@@ -132,7 +129,7 @@ This call returns a status of READY if the API is available.
 
 Click **Subscribe to a Report** above to create a report subscription. 
 
-Use this API to subscribe for reports that you want delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscribe id is returned to you. You’ve to use this id if you choose to unsubscribe to a report. 
+Use this API to subscribe for reports that you want delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report. 
 
 + Parameters
 
@@ -148,9 +145,14 @@ Use this API to subscribe for reports that you want delivered over HTTP endpoint
 
     + Body
 
-            {
-               "reportId":"onboarding_report"
-            }
+               {
+                "webhookConfig": {
+                "webhookUrls": [
+            "string"
+                    ]
+                }
+                }
+
             
 + Response 200 (application/json;charset=utf8)
 
@@ -167,12 +169,15 @@ Use this API to subscribe for reports that you want delivered over HTTP endpoint
     + Body
 
             {
-                "reportId": "onboarding_report",
-                "intervalStartTime": 1603349877778,
-                "intervalEndTime": 1603349877804,
-                "requestId": "5b1de372-654a-40bf-8fe7-d1412f95d68d"
+            "reportId": "string",
+            "subscriptionId": "string",
+            "webhookInfo": [
+                {
+                    "status": "ENABLED",
+                    "url": "string"
+                }
+                ]
             }
-
 
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
@@ -181,11 +186,9 @@ Click **Get Subscriptions** above to retrieve a list of your subscriptions to a 
     
 + Parameters
 
-    + reportId : onboarding_report - This is the name of the report. 
-        _Mandatory_
-    + subscriptionId : This is the subscription id of a report.
+    + reportId - This is the name of the report. 
+    + subscriptionId - This is the subscription id of a report.
     
-
 + Request Get Subscriptions (application/json)
     
     + Headers
@@ -218,17 +221,17 @@ Click **Get Subscriptions** above to retrieve a list of your subscriptions to a 
                "reportId": "onboarding_report"
             }
 
-### Unsubscribe to a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
+### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
 <a name="unsubscribereport" title="Unsubscribe a Report"></a>
 
-Click **Unsubscribe to a Report** above to delete a Customer.
+Click **Unsubscribe from a Report** above to delete your subscription to a subscribed report.
 
 + Parameters
 
     + reportId : onboarding_report - This is the name of the report. 
         _Mandatory_
-    + subscriptionId : `32` (number) - This is the subscription id of a report.
-        _Optional_ _Max=50_
+    + subscriptionId : This is the subscription id of a report.
+    
 
 + Request Unsubscribe to a Report (application/json)
 
@@ -236,7 +239,7 @@ Click **Unsubscribe to a Report** above to delete a Customer.
 
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
             
-+ Response 200 (application/json;charset=utf8)
++ Response 204 (application/json;charset=utf8)
 
      + Headers
      
@@ -255,7 +258,9 @@ Click **Unsubscribe to a Report** above to delete a Customer.
 ### Submit a Report Request [POST /report-requests]
 <a name="submitareportrequest" title="Submit a Report Request"></a>
 
-Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request. 
+Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request.
+
+> **Note:** Once you submit a report request, you instantly get an API response that it is accepted. However, you will receive the actual webhook to download the report after 15 mins.
 
 
 + Request a report using a report id (application/json)
@@ -267,7 +272,9 @@ Click **Submit a Report Request** above to submit a request for a report. You sh
     + Body
 
             {
-              "reportId":"onboarding_report"
+            "intervalEndTime": 1525756289719,
+            "intervalStartTime": 1525744000000,
+            "reportId":"onboarding_report"
               
             }
      
@@ -287,6 +294,7 @@ Click **Submit a Report Request** above to submit a request for a report. You sh
     + Body
 
             {
+              "creationTime": "2020-11-05T06:18:17.368Z",
               "reportId": "onboarding_report",
               "intervalStartTime": 1603349877760,
               "intervalEndTime": 1603349877804,
