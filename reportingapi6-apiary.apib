@@ -13,7 +13,7 @@ Paysafe's Reporting API provides endpoints for querying and generating reports b
 
 > **Note:** The ids of each report are in paranthesis. 
 
-For a detailed description on the four types of reports, refer to the Reporting API Getting Started.... (TBD)
+For a detailed description on the five types of reports, refer to the Reporting API Getting Started.... (TBD)
 
 # Prerequisites
 <a name="prereq" title="Prerequisites"></a>
@@ -27,7 +27,7 @@ Below are the prerequisite steps for merchant onboarding:
 
 * All the API's are RESTful.
 * The Direct Merchants and Platform Partners who possess the Shared API key will only be able to use this API.
-* Onboarding reports should be accessed only by Partners.
+* Onboarding reports are available only to Partners.
 
 <a name="apikey" title="Authentication"></a>
 # Authentication 
@@ -264,6 +264,8 @@ Click **Unsubscribe from a Report** above to delete your subscription to a subsc
 <a name="submitareportrequest" title="Submit a Report Request"></a>
 
 Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request.
+
+> **Note:** You should specify intervalStartTime & intervalEndTime in epoch format of UTC timezone. For reference, you can refer to [Epoch Converter](https://www.epochconverter.com/)
 
 > **Note:** Once you submit a report request, you instantly get an API response that it is accepted. However, you will receive the actual webhook to download the report after 15 mins.
 
