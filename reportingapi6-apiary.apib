@@ -79,13 +79,27 @@ For example:
 
 `https://api.paysafe.com/reporting/v1/report-requests`
 
-# Error Summary
+# Common Errors
 
 | HTTP Status | Error Code    | Error Message |Description |
 |-------------|---------------|-------------  |------------|
 |400                |5068           |An invalid request was submitted.|Either your request is missing a mandatory field or the value of a field does not match the format expected.|
 |400                |5269           |Entity not found.|Report doesn't exist with given id.|
 |400                |5042           |Invalid merchant reference.|You have not subscribed to this report, please create a new subscription.|
+|400                |5068           |An invalid request was submitted.|Provide both intervalStartTime and intervalEndTime or provide nothing.|
+|400                |5270           |Unauthorized access.|The credentials do not have permission to access the requested data.|
+|401                |5068           |Unauthorised Request.|Unauthorised Request.|
+|403                |5068           |The source you requested is forbidden.|The source you requested is forbidden.|
+|404                |5068           |Not Found.| Not Found.|
+
+# API-Specific Errors 
+
+| HTTP Status | Error Code    | Error Message |Description |
+|-------------|---------------|-------------  |------------|
+|400                |5068           |An invalid request was submitted.|Either your request is missing a mandatory field or the value of a field does not match the format expected.|
+|400                |5269           |Entity not found.|Report doesn't exist with given id.|
+|400                |5042           |Invalid merchant reference.|You have not subscribed to this report, please create a new subscription.|
+|400                |5068           |An invalid request was submitted.|Provide both intervalStartTime and intervalEndTime or provide nothing.|
 |400                |5270           |Unauthorized access.|The credentials do not have permission to access the requested data.|
 |401                |5068           |Unauthorised Request.|Unauthorised Request.|
 |403                |5068           |The source you requested is forbidden.|The source you requested is forbidden.|
@@ -136,7 +150,9 @@ This call returns a status of READY if the API is available.
 
 Click **Subscribe to a Report** above to create a report subscription. 
 
-Use this API to subscribe for reports that you want delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report. 
+Use this API to subscribe for reports that you want delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report.
+
+**Note:** Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.  
 
 + Parameters
 
@@ -155,7 +171,7 @@ Use this API to subscribe for reports that you want delivered over HTTP endpoint
                {
                 "webhookConfig": {
                 "webhookUrls": [
-            "string"
+            "webhookurl1","webhookurl2"
                     ]
                 }
                 }
@@ -267,13 +283,24 @@ Click **Unsubscribe from a Report** above to delete your subscription to a subsc
 
 Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request.
 
-> **Note:** You should specify intervalStartTime & intervalEndTime in epoch format of UTC timezone. For reference, you can refer to [Epoch Converter](https://www.epochconverter.com/)
+> **Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Specifying either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
 
 Once you submit a report request, you instantly get an API response that it is accepted. However, you will receive the actual webhook to download the report after 30 mins.
+<br>
 
++ Parameters
 
-+ Request a report using a report id (application/json)
+    + intervalStartTime: `1525744000000` (long) - Report start date-time in milliseconds.
+    + intervalEndTime: `1525756289719` (long) - Report end date-time in milliseconds.
+    + reportId: `onboarding_report` (string) - This is the name of the report.
+    + creationTime : `2020-11-05T06:18:17.368Z` (iso8601-timestamp) - Timestamp at which report was created.
+    + requestId : `5b1de372-654a-40bf-8fe7-d1412f95d68d` (string) - unique id to identify the report-request. Along with report linkm id will be in webhook payload as well.
 
+        
++ Request A Report Using a Report id (application/json)
+
+    
+            
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
