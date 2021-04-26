@@ -228,9 +228,9 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="getsubscription" title="Get a List of Subscriptions"></a>
-Click **Get Subscriptions** above to retrieve a list of your subscriptions to a report using the ID returned in the response to [the original request](#subscribereport).
+Click **Get Subscriptions** above to retrieve a single subscription object only using This a reportId and a subscriptionId response to [the original request](#subscribereport).
 
-**Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. This API takes a reportId and a subscriptionId and returns a single subscription object only.
+**Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. 
     
 + Parameters
 
@@ -291,11 +291,13 @@ Click **Get Subscriptions** above to retrieve a list of your subscriptions to a 
 Click **Update Subscriptions** above to update a subscription to a report using the ID returned in the response to [the original request](#subscribereport). 
 You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
 
+**Note:** This API updates a single Subscription only.
+
+
 + Parameters
 
-    + subscriptionId - This is the subscription id of a report.
-
-    
+  + reportId: This is the name of the report. 
+   
 + Request Update Subscriptions (application/json)
     
     + Headers
@@ -335,7 +337,6 @@ You can use this API to modify your existing subscriptions. Changes to the Sched
     + Body
 
        {
-            "creationTime": "string",
             "name": "string",
             "preferenceId": "string",
             "reportId": "string",
@@ -502,7 +503,7 @@ Click **Get Preferences** above to retrieve a preference to a report using the I
 
 <a name="putpreference" title="Update a preference for a report"></a>
 
-Click **Put Preferences** above to update a preference to a report using the ID returned response to [the original request](#updatepreference).
+Click **Put Preferences** above to update a preference to a report using preferenceId returned in the response from create preference api to [the original request](#updatepreference).
 
 **Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId which is returned when the preference is first created using the create preference API 
 
