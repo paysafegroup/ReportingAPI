@@ -83,27 +83,21 @@ For example:
 
 | HTTP Status | Error Code    | Error Message |Description |
 |-------------|---------------|-------------  |------------|
-|400                |5068           |An invalid request was submitted.|Either your request is missing a mandatory field or the value of a field does not match the format expected.|
-|400                |5269           |Entity not found.|Report doesn't exist with given id.|
-|400                |5042           |Invalid merchant reference.|You have not subscribed to this report, please create a new subscription.|
-|400                |5068           |An invalid request was submitted.|Provide both intervalStartTime and intervalEndTime or provide nothing.|
-|400                |5270           |Unauthorized access.|The credentials do not have permission to access the requested data.|
-|401                |5068           |Unauthorised Request.|Unauthorised Request.|
-|403                |5068           |The source you requested is forbidden.|The source you requested is forbidden.|
-|404                |5068           |Not Found.| Not Found.|
+|401                |5279           |Invalid Credentials|The authentication credentials are invalid.|
+|403                |5270           |Unauthorized access|Authorization does not contain requested permissions.|
+|400                |5068           |An invalid request was submitted.|Either you submitted a request that is missing a mandatory field or the value of a field does not match the format expected.|
+|404                |5269           |Entity not found|Report does not exist with given id.|
+|500                |1000           |Internal Error|An internal error occured.|
 
 # API-Specific Errors 
 
 | HTTP Status | Error Code    | Error Message |Description |
 |-------------|---------------|-------------  |------------|
-|400                |5068           |An invalid request was submitted.|Either your request is missing a mandatory field or the value of a field does not match the format expected.|
-|400                |5269           |Entity not found.|Report doesn't exist with given id.|
-|400                |5042           |Invalid merchant reference.|You have not subscribed to this report, please create a new subscription.|
-|400                |5068           |An invalid request was submitted.|Provide both intervalStartTime and intervalEndTime or provide nothing.|
-|400                |5270           |Unauthorized access.|The credentials do not have permission to access the requested data.|
-|401                |5068           |Unauthorised Request.|Unauthorised Request.|
-|403                |5068           |The source you requested is forbidden.|The source you requested is forbidden.|
-|404                |5068           |Not Found.| Not Found.|
+|400                |5269           |Entity not found|You have not subscribed to this report, or there are no active webhooks.|
+|400                |5068           |An invalid request was submitted.|Provide Both intervalStartTime and intervalEndTime Or Provide Nothing.|
+|400                |5068           |An invalid request was submitted.|intervalStartTime or intervalEndTime cannot be a Future date.|
+|400                |5068           |An invalid request was submitted.|intervalStartTime should be less than intervalEndTime|
+|400                |5068           |An invalid request was submitted.|intervalStartTime and intervalEndTime should be between X days.|
 
 # Webhooks
 <a name="webhooks" title="Webhooks"></a>
@@ -117,7 +111,6 @@ You will receive the following webhook payload for the specified callback URL. T
 ```
 {
   "report": {
-    "requestId": "6cd9b563-65fa-460e-9052-c823d2d3f331",
     "status": "SUCCEEDED",
     "files": [
       "https://paysafe-ss-analytics-876548798765-ca-central-1-reports-qa.s3.ca-central-1.amazonaws.com/reportOutputs/2020_11/6cd9b563-65fa-460e-9052-c823d2d3f331/c31f2940-a47a-4130-9e4b-8d2e74ed953b.csv..."
@@ -150,16 +143,16 @@ This call returns a status of READY if the API is available.
 
 Click **Subscribe to a Report** above to create a report subscription. 
 
-Use this API to subscribe for reports that you want delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report.
+Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report.
 
 **Note:** Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.  
 
 + Parameters
 
-    + reportId : onboarding_report - This is the name of the report. 
-        _Mandatory_
-
-
+    + reportId - This is the name of the report.<br/><br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to [Preferences](Preferences) for more details.
+    + subscriptionId - This is the subscription id of a report.
+    + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
+    
 + Request Subscribe to a Report (application/json)
         
     + Headers
@@ -169,11 +162,24 @@ Use this API to subscribe for reports that you want delivered over HTTP endpoint
     + Body
 
                {
+                 "name": "string",
+                "preferenceId": "string",
+                "scheduleConfig": {
+                "dailySchedule": true,
+                "monthlySchedule": {
+               "dayOfMonth": "string"
+                 },
+                 "reportPeriod": "PREVIOUS_DAY",
+                 "status": "ENABLED",
+                 "weeklySchedule": {
+                 "dayOfWeek": "MONDAY"
+                 }
+                },
                 "webhookConfig": {
                 "webhookUrls": [
-            "webhookurl1","webhookurl2"
+                  "string"
                     ]
-                }
+                 }
                 }
 
             
@@ -192,20 +198,39 @@ Use this API to subscribe for reports that you want delivered over HTTP endpoint
     + Body
 
             {
-            "reportId": "string",
-            "subscriptionId": "string",
-            "webhookInfo": [
-                {
-                    "status": "ENABLED",
-                    "url": "string"
+                "name": "string",
+                "preferenceId": "string",
+                "reportId": "string",
+                "scheduleConfig": {
+                "dailySchedule": {
+                "enabled": true
+                },
+                "monthlySchedule": {
+                "dayOfMonth": "string"
+                },
+                "nextRun": "2021-04-19T10:19:07.879Z",
+                "reportPeriod": "PREVIOUS_DAY",
+                "status": "ENABLED",
+                "weeklySchedule": {
+                "dayOfWeek": "MONDAY"
                 }
-                ]
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+            {
+            "status": "ENABLED",
+            "url": "string"
             }
+            ]
+}
 
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="getsubscription" title="Get a List of Subscriptions"></a>
 Click **Get Subscriptions** above to retrieve a list of your subscriptions to a report using the ID returned in the response to [the original request](#subscribereport).
+
+**Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. This API takes a reportId and a subscriptionId and returns a single subscription object only.
     
 + Parameters
 
@@ -232,27 +257,117 @@ Click **Get Subscriptions** above to retrieve a list of your subscriptions to a 
 
     + Body
 
-            {
-                webhookConfig": {
-                    "webhookUrls": [
-                     “https://webhook.site/46286df1-8fc9-42df-a301-628b9e84580M,
-                      https://webhook.site/46286df1-8fc9-42df-a301-628b9e84560f,
-                      https://webhook.site/46286df1-8fc9-42df-a301-628b9e84510k"
-                       ]
-                },
-               "subscriptionId": "198_onboarding_report",
-               "reportId": "onboarding_report"
+        {
+            "creationTime": "string",
+            "name": "string",
+            "preferenceId": "string",
+            "reportId": "string",
+            "scheduleConfig": {
+            "dailySchedule": true,
+            "monthlySchedule": {
+            "dayOfMonth": "string"
+            },
+            "nextRun": "2021-04-16T11:47:23.360Z",
+            "reportPeriod": "PREVIOUS_DAY",
+            "status": "ENABLED",
+            "weeklySchedule": {
+            "dayOfWeek": "MONDAY"
             }
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+                {
+                    "status": "ENABLED",
+                    "url": "string"
+                }
+            ]
+        }
+        
+
+### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
+
+<a name="putsubscription" title="Create a new Subscription"></a>
+Click **Update Subscriptions** above to update a subscription to a report using the ID returned in the response to [the original request](#subscribereport). 
+You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
+
++ Parameters
+
+    + subscriptionId - This is the subscription id of a report.
+
+    
++ Request Update Subscriptions (application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
+    + Body
+        {
+            "preferenceId": "66e937e5-9812-47e9-a296-6a73b2cc57f8",
+            "scheduleConfig": {
+            "reportPeriod": "PREVIOUS_WEEK",    
+            "status": "ENABLED",
+            "monthlySchedule": {
+            "dayOfMonth": "25"
+            }
+            },
+            "webhookConfig": {
+            "webhookUrls": [
+            "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+            ]
+            }
+        }
+        
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+       {
+            "creationTime": "string",
+            "name": "string",
+            "preferenceId": "string",
+            "reportId": "string",
+            "scheduleConfig": {
+            "dailySchedule": true,
+            "monthlySchedule": {
+            "dayOfMonth": "string"
+                },
+            "nextRun": "2021-04-19T06:52:47.047Z",
+            "reportPeriod": "PREVIOUS_DAY",
+            "status": "ENABLED",
+            "weeklySchedule": {
+            "dayOfWeek": "MONDAY"
+                }
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+            {
+            "status": "ENABLED",
+            "url": "string"
+            }
+            ]
+        }   
 
 ### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
 <a name="unsubscribereport" title="Unsubscribe a Report"></a>
 
-Click **Unsubscribe from a Report** above to delete your subscription to a subscribed report.
+Click **Unsubscribe from a Report** above to delete your preference to a subscribed report.
 
 + Parameters
 
-    + reportId : onboarding_report - This is the name of the report. 
-        _Mandatory_
     + subscriptionId : This is the subscription id of a report.
     
 
@@ -274,6 +389,203 @@ Click **Unsubscribe from a Report** above to delete your subscription to a subsc
             X-Application-Error-Message: Internal Error
             X-Application-Error-Description: An internal error occurred
 
+# Group Preferences
+
+## Preferences [/report-configs/{preference}]
+
+### Create Preference for a report [POST /report-configs/preference]
+<a name="Create a preference for a report" title="Create prefernces for a report"></a>
+
+Click **Create preference for a report** above to create preference for a report. 
+
+A preference is an additional setting that customizes the generated reports. You can create a new preference and attach it to a subscription. This will applies the additional settings to the reports generated by that subscription.
+
++ Parameters
+
+    + preferenceId : onboarding_report - This is the unique preferenceId that can be used in a subscription. 
+        _Mandatory_
+
+
++ Request Create preference to a Report (application/json)
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
+    + Body
+
+              {
+                "fieldPreference": {
+                "includeFields": [
+                "creationtime",
+                "updatedtime"
+                ]
+                }
+            }
+
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+           {
+                "outputPreference": null,
+                "fieldPreference": {
+                "includeFields": [
+                "creationtime",
+                "updatedtime"
+                ]
+                },
+            "emailPreference": {
+                "subject": null
+            },
+            "preferenceId": "2669629c-0bb6-43bf-a827-f6fcaf6c8190",
+            "createdDate": "2021-04-23T04:54:52.674Z",
+            "lastModifiedDate": "2021-04-23T04:54:52.674Z"
+            }
+
+### Get Preference for a report [GET /report-configs/preference/{preferenceId}]
+
+<a name="getpreference" title="Get a List of Preferences"></a>
+
+Click **Get Preferences** above to retrieve a preference to a report using the ID returned in the response to [the original request](#GetPreference).
+
+**Note:** Use this API to get a preference using a unique preferenceId. You can get the preferenceId from the response of the Create preference API. It returns a single preference object and not the list of preferences. Please refer to <em>Create Preference for a report</em> for more details.
+
++ Parameters
+
+    + reportId - This is the name of the report. 
+    + preferenceId - This is the preference id of a report.
+    
++ Request Get Preference (application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+        {
+            "createdDate": "2021-04-19T10:25:01.738Z",
+            "fieldPreference": {
+            "includeFields": [
+            "string"
+            ]
+            },
+            "lastModifiedDate": "2021-04-19T10:25:01.738Z",
+            "preferenceId": "string"
+        }
+        
+### Update Preferences for a report [PUT /report-configs/preference/{preferenceId}]
+
+<a name="putpreference" title="Update a preference for a report"></a>
+
+Click **Put Preferences** above to update a preference to a report using the ID returned response to [the original request](#updatepreference).
+
+**Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId which is returned when the preference is first created using the create preference API 
+
+    
++ Parameters
+
+    + reportId - This is the name of the report. 
+    + preferenceId - This is the preference id of a report.
+    
++ Request Get Subscriptions (application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+    
+    + Body
+
+        {
+            "fieldPreference": {
+            "includeFields": [
+            "string"
+            ]
+            }
+        }
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+        {
+            "createdDate": "2021-04-19T10:25:47.848Z",
+            "fieldPreference": {
+            "includeFields": [
+            "string"
+            ]
+            },
+            "lastModifiedDate": "2021-04-19T10:25:47.848Z",
+            "preferenceId": "string"
+        }
+        
+### Delete a preference on a Report [DELETE /report-configs/preference/{preferenceId}]
+
+<a name="deletepreference" title="Delete a preference on a Report"></a>
+
+Click **Delete a preference from a Report** above to delete your preference to a report.
+
+**Note:** You have to use the unique preference id that is returned to you at the time of creating a preference to delete a preference to a report.
+
++ Parameters
+
+    + reportId : onboarding_report - This is the name of the report. 
+        _Mandatory_
+    + preferenceId : This is the subscription id of a report.
+    
+
++ Request Unsubscribe to a Report (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
++ Response 204 (application/json;charset=utf8)
+
+     + Headers
+     
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+            
 # Group Report Requests
 
 ## Submit Report [/report-requests]
@@ -283,9 +595,9 @@ Click **Unsubscribe from a Report** above to delete your subscription to a subsc
 
 Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request.
 
-> **Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Specifying either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
+**Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Entering either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
 
-Once you submit a report request, you instantly get an API response that it is accepted. However, you will receive the actual webhook to download the report after 30 mins.
+Once you submit a report request, you instantly get an API response that it is accepted. Webhook will be delivered within 30 minutes from when the request is accepted.
 <br>
 
 + Parameters
@@ -294,7 +606,7 @@ Once you submit a report request, you instantly get an API response that it is a
     + intervalEndTime: `1525756289719` (long) - Report end date-time in milliseconds.
     + reportId: `onboarding_report` (string) - This is the name of the report.
     + creationTime : `2020-11-05T06:18:17.368Z` (iso8601-timestamp) - Timestamp at which report was created.
-    + requestId : `5b1de372-654a-40bf-8fe7-d1412f95d68d` (string) - unique id to identify the report-request. Along with report linkm id will be in webhook payload as well.
+    + requestId : `5b1de372-654a-40bf-8fe7-d1412f95d68d` (string) - unique id to identify the report-request. Along with reporid, it will be in webhook payload as well.
 
         
 + Request A Report Using a Report id (application/json)
