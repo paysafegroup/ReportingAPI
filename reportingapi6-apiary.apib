@@ -143,9 +143,7 @@ This call returns a status of READY if the API is available.
 
 Click **Subscribe to a Report** above to create a report subscription. 
 
-Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique subscriber id is returned to you. You’ve to use this id if you choose to unsubscribe to a report.
-
-**Note:** Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.  
+Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response. You’ve to use this unique subscriptionId to retrieve, update and to unsubscribe from report..
 
 + Parameters
 
@@ -228,7 +226,7 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="getsubscription" title="Get a List of Subscriptions"></a>
-Click **Get Subscriptions** above to retrieve a single subscription object only using This a reportId and a subscriptionId response to [the original request](#subscribereport).
+Click **Get Subscriptions** above to retrieve a single subscription object only using the reportId and subscriptionId returned in response when you have subscribed for the report. [the original request](#subscribereport).
 
 **Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. 
     
@@ -288,11 +286,14 @@ Click **Get Subscriptions** above to retrieve a single subscription object only 
 ### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="putsubscription" title="Create a new Subscription"></a>
-Click **Update Subscriptions** above to update a subscription to a report using the ID returned in the response to [the original request](#subscribereport). 
+Click **Update Subscriptions** above to update a subscription to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
+
 You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
 
-**Note:** This API updates a single Subscription only.
-
+**Notes:** <ul>
+    <li> This API updates a single Subscription only.</li>
+    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
+</ul>
 
 + Parameters
 
