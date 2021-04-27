@@ -360,16 +360,17 @@ Click **Delete a preference from a Report** above to delete your preference to a
 
 Click **Subscribe to a Report** above to create a report subscription. 
 
-Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.</br> 
-**Note:** 
+Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.<br/><br/>
+**Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
     <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports</li>
     <li>You can use webhook URLs to run a schedule. 
+</ul>
 
 + Parameters
 
-    + reportId - This is the name of the report.<br/><br/> 
+    + reportId - This is the name of the report. 
     + preferenceId - This is the unique preferenceId that can be used in a subscription.<br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to <em>Preferences</em> for more details.
     + subscriptionId - This is the subscription id of a report.
     + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
