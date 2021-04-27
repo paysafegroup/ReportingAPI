@@ -98,6 +98,18 @@ For example:
 |400                |5068           |An invalid request was submitted.|intervalStartTime or intervalEndTime cannot be a Future date.|
 |400                |5068           |An invalid request was submitted.|intervalStartTime should be less than intervalEndTime|
 |400                |5068           |An invalid request was submitted.|intervalStartTime and intervalEndTime should be between X days.|
+|500                |11006          |Something went wrong!|Something went wrong!|
+|404                |11100          |Subscription does not exit with given id.|Subscription does not exist with given id.|
+|400                |11101          |Invalid emailConfig in Subscription.|Email Subscriptions are not yet supported.|
+|400                |11102          |Invalid webhookConfig in Subscription.|Webhook Config should be provided.|
+|400                |11103          |Invalid scheduleConfig in Subscription.|Empty scheduleConfig section is not Accepted. Either enter the scheduleConfig details or remove the section.|
+|400                |11104          |Invalid scheduleConfig in Subscription.|Only one of the daily, weekly, or monthly schedules can be specified.|
+|400                |11105          |Invalid scheduleConfig in Subscription.|Invalid scheduleConfig in Subscription.|
+|400                |11106          |Subscriptions active for a given preference.|Can't delete preference when subscriptions are active.|
+|400                |11107          |Invalid scheduleConfig in Subscription.|Unable to determine the scheduleType in scheduleConfig.|
+|404                |11001          |Report does not exist with given id.|Report does not exist with given id.|
+|404                |11201          |Report preference does not exist with given id.|Report preference does not exist with given id.|
+|404                |11301          |Invalid intervalStartTime/intervalEndTime in Report Request.|Invalid intervalStartTime/intervalEndTime in Report Request.|
 
 # Webhooks
 <a name="webhooks" title="Webhooks"></a>
@@ -136,7 +148,7 @@ This call returns a status of READY if the API is available.
 
 # Group Subscriptions
 
-## Subscriptions [/report-configs/{reportId}]
+## Create Subscriptions [/report-configs/{reportId}]
 
 ### Subscribe to a Report [POST /report-configs/{reportId}/subscriptions]
 <a name="subscribereport" title="Subscribe a Report"></a>
@@ -223,6 +235,8 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
             ]
 }
 
+## Get Subscriptions [/report - configs]
+
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="getsubscription" title="Get a List of Subscriptions"></a>
@@ -283,6 +297,7 @@ Click **Get Subscriptions** above to retrieve a single subscription object only 
         }
         
 
+## Update Subscriptions [/report-configs/{reportId}/subscriptions/{subscriptionId}]
 ### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="putsubscription" title="Create a new Subscription"></a>
@@ -363,6 +378,7 @@ You can use this API to modify your existing subscriptions. Changes to the Sched
             ]
         }   
 
+## Delete Subscriptions [/report-configs]
 ### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
 <a name="unsubscribereport" title="Unsubscribe a Report"></a>
 
@@ -393,10 +409,10 @@ Click **Unsubscribe from a Report** above to delete your preference to a subscri
 
 # Group Preferences
 
-## Preferences [/report-configs/{preference}]
+## Create Preference [/report-configs/{preference}]
 
 ### Create Preference for a report [POST /report-configs/preference]
-<a name="Create a preference for a report" title="Create prefernces for a report"></a>
+<a name="createpreferences" title="Create prefernces for a report"></a>
 
 Click **Create preference for a report** above to create preference for a report. 
 
@@ -456,6 +472,8 @@ A preference is an additional setting that customizes the generated reports. You
             "lastModifiedDate": "2021-04-23T04:54:52.674Z"
             }
 
+## Get Preference [/report-configs/preference/{preferenceId}]
+
 ### Get Preference for a report [GET /report-configs/preference/{preferenceId}]
 
 <a name="getpreference" title="Get a List of Preferences"></a>
@@ -500,6 +518,8 @@ Click **Get Preferences** above to retrieve a preference to a report using the I
             "preferenceId": "string"
         }
         
+## Update Preference [/report-configs]
+
 ### Update Preferences for a report [PUT /report-configs/preference/{preferenceId}]
 
 <a name="putpreference" title="Update a preference for a report"></a>
@@ -555,6 +575,8 @@ Click **Put Preferences** above to update a preference to a report using prefere
             "preferenceId": "string"
         }
         
+## Delete Preference [/report - configs]
+
 ### Delete a preference on a Report [DELETE /report-configs/preference/{preferenceId}]
 
 <a name="deletepreference" title="Delete a preference on a Report"></a>
