@@ -198,19 +198,18 @@ A preference is an additional setting that customizes the generated reports. You
     + Body
 
            {
-                "outputPreference": null,
                 "fieldPreference": {
                 "includeFields": [
                 "creationtime",
                 "updatedtime"
                 ]
                 },
-            "emailPreference": {
+                {
                 "subject": null
-            },
-            "preferenceId": "2669629c-0bb6-43bf-a827-f6fcaf6c8190",
-            "createdDate": "2021-04-23T04:54:52.674Z",
-            "lastModifiedDate": "2021-04-23T04:54:52.674Z"
+                },
+                "preferenceId": "2669629c-0bb6-43bf-a827-f6fcaf6c8190",
+                "createdDate": "2021-04-23T04:54:52.674Z",
+                "lastModifiedDate": "2021-04-23T04:54:52.674Z"
             }
 
 ## Get Preference [/report-configs/preference/{preferenceId}]
@@ -324,7 +323,11 @@ Click **Put Preferences** above to update a preference to a report using prefere
 
 Click **Delete a preference from a Report** above to delete your preference to a report.
 
-**Note:** You have to use the unique preference id that is returned to you at the time of creating a preference to delete a preference to a report.
+**Notes:** 
+<ul>
+    <li>You have to use the unique preference id that is returned to you at the time of creating a preference to delete a preference to a report.</li>
+    <li>You can not delete preference to a report when report subscriptions are active. Please see <em> Subscrptions Section</em> for more details</li>
+</ul>
 
 + Parameters
 
@@ -366,7 +369,19 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
     <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports</li>
     <li>You can use webhook URLs to run a schedule. 
+    <li>The scheduleConfig is optional.</li>
+    <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
 </ul>
+
+The following table describes the list of values for the attributes in this API:<br/>
+
+| Field | Accepted Values  |
+|-------|------------------|
+|reportperiod |PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH <br/><br/> **Note:** Previous_Day is the starttime of the day before to the endtime of the day before.|
+|status|ENABLED, DISABLED|
+|daiyschedule|TRUE, FALSE|
+|dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
+|dayOfMonth|1-28 or L / L-1 / L-2|
 
 + Parameters
 
