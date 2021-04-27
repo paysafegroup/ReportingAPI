@@ -146,266 +146,6 @@ This call returns a status of READY if the API is available.
                 "status" : "READY"
             }
 
-# Group Subscriptions
-
-## Create Subscriptions [/report-configs/{reportId}]
-
-### Subscribe to a Report [POST /report-configs/{reportId}/subscriptions]
-<a name="subscribereport" title="Subscribe a Report"></a>
-
-Click **Subscribe to a Report** above to create a report subscription. 
-
-Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response. You’ve to use this unique subscriptionId to retrieve, update and to unsubscribe from report..
-
-+ Parameters
-
-    + reportId - This is the name of the report.<br/><br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to [Preferences](Preferences) for more details.
-    + subscriptionId - This is the subscription id of a report.
-    + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
-    
-+ Request Subscribe to a Report (application/json)
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-    + Body
-
-               {
-                 "name": "string",
-                "preferenceId": "string",
-                "scheduleConfig": {
-                "dailySchedule": true,
-                "monthlySchedule": {
-               "dayOfMonth": "string"
-                 },
-                 "reportPeriod": "PREVIOUS_DAY",
-                 "status": "ENABLED",
-                 "weeklySchedule": {
-                 "dayOfWeek": "MONDAY"
-                 }
-                },
-                "webhookConfig": {
-                "webhookUrls": [
-                  "string"
-                    ]
-                 }
-                }
-
-            
-+ Response 200 (application/json;charset=utf8)
-
-    + Headers
-    
-            Transfer-Encoding :chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
-
-    + Body
-
-            {
-                "name": "string",
-                "preferenceId": "string",
-                "reportId": "string",
-                "scheduleConfig": {
-                "dailySchedule": {
-                "enabled": true
-                },
-                "monthlySchedule": {
-                "dayOfMonth": "string"
-                },
-                "nextRun": "2021-04-19T10:19:07.879Z",
-                "reportPeriod": "PREVIOUS_DAY",
-                "status": "ENABLED",
-                "weeklySchedule": {
-                "dayOfWeek": "MONDAY"
-                }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
-            {
-            "status": "ENABLED",
-            "url": "string"
-            }
-            ]
-}
-
-## Get Subscriptions [/report - configs]
-
-### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
-
-<a name="getsubscription" title="Get a List of Subscriptions"></a>
-Click **Get Subscriptions** above to retrieve a single subscription object only using the reportId and subscriptionId returned in response when you have subscribed for the report. [the original request](#subscribereport).
-
-**Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. 
-    
-+ Parameters
-
-    + reportId - This is the name of the report. 
-    + subscriptionId - This is the subscription id of a report.
-    
-+ Request Get Subscriptions (application/json)
-    
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            
-+ Response 200 (application/json;charset=utf8)
-
-    + Headers
-    
-            Transfer-Encoding :chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
-
-    + Body
-
-        {
-            "creationTime": "string",
-            "name": "string",
-            "preferenceId": "string",
-            "reportId": "string",
-            "scheduleConfig": {
-            "dailySchedule": true,
-            "monthlySchedule": {
-            "dayOfMonth": "string"
-            },
-            "nextRun": "2021-04-16T11:47:23.360Z",
-            "reportPeriod": "PREVIOUS_DAY",
-            "status": "ENABLED",
-            "weeklySchedule": {
-            "dayOfWeek": "MONDAY"
-            }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
-                {
-                    "status": "ENABLED",
-                    "url": "string"
-                }
-            ]
-        }
-        
-
-## Update Subscriptions [/report-configs/{reportId}/subscriptions/{subscriptionId}]
-### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
-
-<a name="putsubscription" title="Create a new Subscription"></a>
-Click **Update Subscriptions** above to update a subscription to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
-
-You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
-
-**Notes:** <ul>
-    <li> This API updates a single Subscription only.</li>
-    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
-</ul>
-
-+ Parameters
-
-  + reportId: This is the name of the report. 
-   
-+ Request Update Subscriptions (application/json)
-    
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            
-    + Body
-        {
-            "preferenceId": "66e937e5-9812-47e9-a296-6a73b2cc57f8",
-            "scheduleConfig": {
-            "reportPeriod": "PREVIOUS_WEEK",    
-            "status": "ENABLED",
-            "monthlySchedule": {
-            "dayOfMonth": "25"
-            }
-            },
-            "webhookConfig": {
-            "webhookUrls": [
-            "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
-            ]
-            }
-        }
-        
-            
-+ Response 200 (application/json;charset=utf8)
-
-    + Headers
-    
-            Transfer-Encoding :chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
-
-    + Body
-
-       {
-            "name": "string",
-            "preferenceId": "string",
-            "reportId": "string",
-            "scheduleConfig": {
-            "dailySchedule": true,
-            "monthlySchedule": {
-            "dayOfMonth": "string"
-                },
-            "nextRun": "2021-04-19T06:52:47.047Z",
-            "reportPeriod": "PREVIOUS_DAY",
-            "status": "ENABLED",
-            "weeklySchedule": {
-            "dayOfWeek": "MONDAY"
-                }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
-            {
-            "status": "ENABLED",
-            "url": "string"
-            }
-            ]
-        }   
-
-## Delete Subscriptions [/report-configs]
-### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
-<a name="unsubscribereport" title="Unsubscribe a Report"></a>
-
-Click **Unsubscribe from a Report** above to delete your preference to a subscribed report.
-
-+ Parameters
-
-    + subscriptionId : This is the subscription id of a report.
-    
-
-+ Request Unsubscribe to a Report (application/json)
-
-    + Headers
-
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            
-+ Response 204 (application/json;charset=utf8)
-
-     + Headers
-     
-            Transfer-Encoding :chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
 
 # Group Preferences
 
@@ -416,7 +156,8 @@ Click **Unsubscribe from a Report** above to delete your preference to a subscri
 
 Click **Create preference for a report** above to create preference for a report. 
 
-A preference is an additional setting that customizes the generated reports. You can create a new preference and attach it to a subscription. This will applies the additional settings to the reports generated by that subscription.
+A preference is an additional setting that customizes the generated reports. You can create a new preference and attach it to a subscription. This will applies the additional settings to the reports generated by that subscription.<br/>
+**Note:** This API takes a reportId and a subscriptionId and returns a single subscription object only.
 
 + Parameters
 
@@ -478,9 +219,9 @@ A preference is an additional setting that customizes the generated reports. You
 
 <a name="getpreference" title="Get a List of Preferences"></a>
 
-Click **Get Preferences** above to retrieve a preference to a report using the ID returned in the response to [the original request](#GetPreference).
+Click **Get Preferences** above to retrieve a preference to a report using the using preferenceId. returned in the response from create preference api in the response to [the original request](#GetPreference).
 
-**Note:** Use this API to get a preference using a unique preferenceId. You can get the preferenceId from the response of the Create preference API. It returns a single preference object and not the list of preferences. Please refer to <em>Create Preference for a report</em> for more details.
+**Note:** Use this API to get a preference using a unique preferenceId. You can get the preferenceId from the response of the Create preference API. It returns a single preference object and not the list of preferences. Please refer to <em> Create Preference</em> for more details.
 
 + Parameters
 
@@ -590,6 +331,270 @@ Click **Delete a preference from a Report** above to delete your preference to a
     + reportId : onboarding_report - This is the name of the report. 
         _Mandatory_
     + preferenceId : This is the subscription id of a report.
+    
+
++ Request Unsubscribe to a Report (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
++ Response 204 (application/json;charset=utf8)
+
+     + Headers
+     
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+            
+# Group Subscriptions
+
+## Create Subscriptions [/report-configs/{reportId}]
+
+### Subscribe to a Report [POST /report-configs/{reportId}/subscriptions]
+<a name="subscribereport" title="Subscribe a Report"></a>
+
+Click **Subscribe to a Report** above to create a report subscription. 
+
+Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.</br> 
+**Note:** You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report..
+
++ Parameters
+
+    + reportId - This is the name of the report.<br/><br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to [Preferences](Preferences) for more details.
+    + subscriptionId - This is the subscription id of a report.
+    + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
+    
++ Request Subscribe to a Report (application/json)
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
+    + Body
+
+               {
+                 "name": "string",
+                "preferenceId": "string",
+                "scheduleConfig": {
+                "dailySchedule": true,
+                "monthlySchedule": {
+               "dayOfMonth": "string"
+                 },
+                 "reportPeriod": "PREVIOUS_DAY",
+                 "status": "ENABLED",
+                 "weeklySchedule": {
+                 "dayOfWeek": "MONDAY"
+                 }
+                },
+                "webhookConfig": {
+                "webhookUrls": [
+                  "string"
+                    ]
+                 }
+                }
+
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+            {
+                "name": "string",
+                "preferenceId": "string",
+                "reportId": "string",
+                "scheduleConfig": {
+                "dailySchedule": {
+                "enabled": true
+                },
+                "monthlySchedule": {
+                "dayOfMonth": "string"
+                },
+                "nextRun": "2021-04-19T10:19:07.879Z",
+                "reportPeriod": "PREVIOUS_DAY",
+                "status": "ENABLED",
+                "weeklySchedule": {
+                "dayOfWeek": "MONDAY"
+                }
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+            {
+            "status": "ENABLED",
+            "url": "string"
+            }
+            ]
+}
+
+## Get Subscriptions [/report - configs]
+
+### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
+
+<a name="getsubscription" title="Get a List of Subscriptions"></a>
+Click **Get Subscriptions** above to retrieve a single subscription object only.<br/>
+This API uses the subscriptionId returned in response when you have subscribed for the report. [the original request](#subscribereport).
+
+**Note:** Changes made to ScheduleConfig will reflect in the next scheduled trigger. 
+    
++ Parameters
+
+    + reportId - This is the name of the report. 
+    + subscriptionId - This is the subscription id of a report.
+    
++ Request Get Subscriptions (application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+        {
+            "creationTime": "string",
+            "name": "string",
+            "preferenceId": "string",
+            "reportId": "string",
+            "scheduleConfig": {
+            "dailySchedule": true,
+            "monthlySchedule": {
+            "dayOfMonth": "string"
+            },
+            "nextRun": "2021-04-16T11:47:23.360Z",
+            "reportPeriod": "PREVIOUS_DAY",
+            "status": "ENABLED",
+            "weeklySchedule": {
+            "dayOfWeek": "MONDAY"
+            }
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+                {
+                    "status": "ENABLED",
+                    "url": "string"
+                }
+            ]
+        }
+        
+
+## Update Subscriptions [/report-configs/{reportId}/subscriptions/{subscriptionId}]
+### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
+
+<a name="putsubscription" title="Create a new Subscription"></a>
+Click **Update Subscriptions** above to update a preferenceId to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
+
+You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
+
+**Notes:** <ul>
+    <li> This API updates a single Subscription only.</li>
+    <li>  You have to use the reportId and subscriptionId returned in response when you have subscribed for the report.</li>
+    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
+</ul>
+
++ Parameters
+
+  + reportId: This is the name of the report. 
+   
++ Request Update Subscriptions (application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
+    + Body
+        {
+            "preferenceId": "66e937e5-9812-47e9-a296-6a73b2cc57f8",
+            "scheduleConfig": {
+            "reportPeriod": "PREVIOUS_WEEK",    
+            "status": "ENABLED",
+            "monthlySchedule": {
+            "dayOfMonth": "25"
+            }
+            },
+            "webhookConfig": {
+            "webhookUrls": [
+            "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+            ]
+            }
+        }
+        
+            
++ Response 200 (application/json;charset=utf8)
+
+    + Headers
+    
+            Transfer-Encoding :chunked
+            Date:Tue, 27 Oct 2020 07:19:31 GMT
+            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
+            X-Application-Error-Code:  1000
+            X-Application-Status-Code: 1000
+            X-Application-Error-Message: Internal Error
+            X-Application-Error-Description: An internal error occurred
+
+    + Body
+
+       {
+            "name": "string",
+            "preferenceId": "string",
+            "reportId": "string",
+            "scheduleConfig": {
+            "dailySchedule": true,
+            "monthlySchedule": {
+            "dayOfMonth": "string"
+                },
+            "nextRun": "2021-04-19T06:52:47.047Z",
+            "reportPeriod": "PREVIOUS_DAY",
+            "status": "ENABLED",
+            "weeklySchedule": {
+            "dayOfWeek": "MONDAY"
+                }
+            },
+            "subscriptionId": "string",
+            "updatedTime": "string",
+            "webhookInfo": [
+            {
+            "status": "ENABLED",
+            "url": "string"
+            }
+            ]
+        }   
+
+## Delete Subscriptions [/report-configs]
+### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
+<a name="unsubscribereport" title="Unsubscribe a Report"></a>
+
+Click **Unsubscribe from a Report** above to delete your preference to a subscribed report.
+
++ Parameters
+
+    + subscriptionId : This is the subscription id of a report.
     
 
 + Request Unsubscribe to a Report (application/json)
