@@ -367,11 +367,10 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
     <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports. scheduleConfig is an optional attribute.</li>
-    <li>Only one of section in scheduleConfig should be entered</li>.
+    <li>Only one of section in scheduleConfig should be entered.</li>
     <li>If schedule information is given and enabled, in response nextRun attribute is returned with next trigger time.</li>
-    <li>You can use webhook URLs to run a schedule. </li>
-    <li><webhookConfig.webhookUrls needs to have atleast one webhook.</li>
-    <li>The scheduleConfig is optional.</li>
+    <li>You can use webhook URLs to run a schedule.</li>
+    <li>webhookConfig.webhookUrls needs to have atleast one webhook.</li>
     <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
 </ul>
 
