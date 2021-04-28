@@ -351,7 +351,7 @@ Click **Delete a preference from a Report** above to delete your preference to a
             
 # Group Subscriptions
 
-## Create Subscriptions [/report-configs/{reportId}]
+## Create Subscription [/report-configs/{reportId}]
 
 ### Subscribe to a Report [POST /report-configs/{reportId}/subscriptions]
 <a name="subscribereport" title="Subscribe a Report"></a>
@@ -368,6 +368,7 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     <li>You can use webhook URLs to run a schedule.</li>
     <li>webhookConfig.webhookUrls needs to have atleast one webhook.</li>
     <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
+    <li>preferenceId is optional field. You can overide the behaviour of report by attaching your own preferenceId to subscription request.</li>
 </ul>
 
 The following table describes the list of values for the attributes in this API:<br/>
@@ -459,7 +460,7 @@ The following table describes the list of values for the attributes in this API:
             ]
 }
 
-## Get Subscriptions [/report - configs]
+## Get Subscription [/report - configs]
 
 ### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
@@ -472,7 +473,6 @@ This API uses the subscriptionId returned in response when you subscribe for a r
 + Parameters
 
     + reportId - This is the name of the report. 
-    + preferenceId - This is the unique preferenceId that can be used in a subscription.<br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to <em>Preferences</em> for more details.
 
 + Request Get Subscriptions (application/json)
     
@@ -522,7 +522,7 @@ This API uses the subscriptionId returned in response when you subscribe for a r
         }
         
 
-## Update Subscriptions [/report-configs/{reportId}/subscriptions/{subscriptionId}]
+## Update Subscription [/report-configs/{reportId}/subscriptions/{subscriptionId}]
 ### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="putsubscription" title="Create a new Subscription"></a>
@@ -613,7 +613,7 @@ You can use this API to modify your existing subscriptions. Changes to the Sched
             ]
         }   
 
-## Delete Subscriptions [/report-configs]
+## Delete Subscription [/report-configs]
 ### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
 <a name="unsubscribereport" title="Unsubscribe a Report"></a>
 
