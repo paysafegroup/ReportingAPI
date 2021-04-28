@@ -378,9 +378,9 @@ The following table describes the list of values for the attributes in this API:
 
 | Field | Accepted Values  |
 |-------|------------------|
-|reportperiod |Previous Day, Previous Week (Start of Monday to Start of Monday), Previous Month (Start of 1st to Start of 1st).|
+|reportPeriod |<ul><li>Accepted values are:PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH</li><li>Previous Week is Start of Monday previous week to Start of Monday this week, Previous Month is Start of 1st last month to Start of 1st this month.</li></ul>.|
 |status|ENABLED, DISABLED|
-|daiyschedule|TRUE, FALSE|
+|daiySchedule|TRUE, FALSE|
 |dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
 |dayOfMonth|1-28 or L / L-1 / L-2|
 
@@ -389,8 +389,7 @@ The following table describes the list of values for the attributes in this API:
     + reportId - This is the name of the report. 
     + preferenceId - This is the unique preferenceId that can be used in a subscription.<br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to <em>Preferences</em> for more details.
     + subscriptionId - This is the subscription id of a report.
-    + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
-    
+
 + Request Subscribe to a Report (application/json)
         
     + Headers
@@ -399,26 +398,28 @@ The following table describes the list of values for the attributes in this API:
 
     + Body
 
-               {
-                 "name": "string",
+            {
+                "name": "string",
                 "preferenceId": "string",
                 "scheduleConfig": {
-                "dailySchedule": true,
-                "monthlySchedule": {
-               "dayOfMonth": "string"
-                 },
-                 "reportPeriod": "PREVIOUS_DAY",
-                 "status": "ENABLED",
-                 "weeklySchedule": {
-                 "dayOfWeek": "MONDAY"
-                 }
+                "dailySchedule": {
+                "enabled": true
                 },
-                "webhookConfig": {
-                "webhookUrls": [
-                  "string"
-                    ]
-                 }
+                "monthlySchedule": {
+                "dayOfMonth": "string"
+                },
+                "reportPeriod": "PREVIOUS_DAY",
+                "status": "ENABLED",
+                "weeklySchedule": {
+                "dayOfWeek": "MONDAY"
                 }
+            },
+            "webhookConfig": {
+            "webhookUrls": [
+            "string"
+            ]
+            }
+        }
 
             
 + Response 200 (application/json;charset=utf8)
@@ -477,8 +478,7 @@ This API uses the subscriptionId returned in response when you subscribe for a r
 
     + reportId - This is the name of the report. 
     + preferenceId - This is the unique preferenceId that can be used in a subscription.<br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to <em>Preferences</em> for more details.
-    + subscriptionId - This is the subscription id of a report.
-    
+
 + Request Get Subscriptions (application/json)
     
     + Headers
