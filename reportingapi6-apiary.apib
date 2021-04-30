@@ -659,6 +659,16 @@ Click **Unsubscribe from a Report** above to delete a preference to a subscribed
 
 Click **Submit a Report Request** above to submit a request for a report. You should have already subscribed to a [report](#subscribereport) to submit this request.
 
+The following table describes the list of values for the attributes in this API:<br/>
+
+| Field | Accepted Values  |
+|-------|------------------|
+|includeFields|list of fields you need in the report.|
+|intervalStartTime|Report start date-time in milliseconds. Example: 1525744000000.|
+|intervalEndTime|Report end date-time in milliseconds.|
+|reportId|This is the name of the report.|
+|subscriptionId|This is the subscription Id of the report subscription.|   
+
 **Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Entering either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
 
 Once you submit a report request, you instantly get an API response that it is accepted. Webhook will be delivered within 30 minutes from when the request is accepted.
@@ -666,10 +676,7 @@ Once you submit a report request, you instantly get an API response that it is a
 
 + Parameters
 
-    + intervalStartTime: `1525744000000` (long) - Report start date-time in milliseconds.
-    + intervalEndTime: `1525756289719` (long) - Report end date-time in milliseconds.
-    
-        
+  
 + Request A Report Using a Report id (application/json)
 
     
@@ -681,10 +688,13 @@ Once you submit a report request, you instantly get an API response that it is a
     + Body
 
             {
-            "intervalEndTime": 1525756289719,
-            "intervalStartTime": 1525744000000,
-            "reportId":"onboarding_report"
-              
+                "includeFields": [
+                "string"
+                ],
+                "intervalEndTime": 1525744000000,
+                "intervalStartTime": 1525744000000,
+                "reportId": "string",
+                "subscriptionId": "string"
             }
      
 + Response 200 (application/json) 
