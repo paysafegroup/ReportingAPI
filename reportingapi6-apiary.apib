@@ -170,9 +170,6 @@ A preference is an additional setting that customizes the generated reports. You
 
 + Parameters
 
-    + preferenceId : onboarding_report - This is the unique preferenceId that can be used in a subscription. 
-        _Mandatory_
-
 
 + Request Create preference to a Report (application/json)
         
@@ -275,7 +272,6 @@ Click **Put Preferences** above to update a preference to a report using prefere
     
 + Parameters
 
-    + reportId - This is the name of the report. 
     + preferenceId - This is the preference id of a report.
     
 + Request Get Subscriptions (application/json)
@@ -335,9 +331,7 @@ Click **Delete a preference from a Report** above to delete your preference to a
 
 + Parameters
 
-    + reportId : onboarding_report - This is the name of the report. 
-        _Mandatory_
-    + preferenceId : This is the subscription id of a report.
+     + preferenceId : This is the subscription id of a report.
     
 
 + Request Unsubscribe to a Report (application/json)
@@ -368,6 +362,21 @@ Click **Delete a preference from a Report** above to delete your preference to a
 Click **Subscribe to a Report** above to create a report subscription. 
 
 Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.<br/><br/>
+
+The following table describes the list of values for the attributes in this API:<br/>
+
+| Field | Accepted Values  |
+|-------|------------------|
+|Name|Name is optional. Stores is a readable description for the report subscription.|
+|preferenceId|preferenceId is optional. Attach the preferenceId of preference created if you want to update the default behaviour of report.|
+|scheduleConfig|Fill the section only if you want to schedule a Report.|
+|scheduleConfig.dailySchedule.enabled|true/false|
+|scheduleConfig.monthlySchedule.dayOfMonth|1-28 or L / L-1 / L-2|
+|scheduleConfig.reportPeriod|PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/><br/><ul><li>PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH</li><li>PREVIOUS_WEEK : Start of previous week's Monday till this week's Monday</li>,<li>PREVIOUS_MONTH: Start of 1st last month to Start of 1st this month</li></ul>|
+|scheduleConfig.status|ENABLED/DISABLED. Resumes/Pauses the schedule.|
+|scheduleConfig.weeklySchedule.dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
+|webhookConfig.webhookUrls|webhookConfig is mandatory. Mention list of webhook endpoints|
+
 **Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
@@ -375,20 +384,11 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     <li>Only one of section in scheduleConfig should be entered.</li>
     <li>If schedule information is given and enabled, in response nextRun attribute is returned with next trigger time.</li>
     <li>You can use webhook URLs to run a schedule.</li>
-    <li>webhookConfig.webhookUrls needs to have atleast one webhook.</li>
     <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
     <li>preferenceId is optional field. You can overide the behaviour of report by attaching your own preferenceId to subscription request.</li>
 </ul>
 
-The following table describes the list of values for the attributes in this API:<br/>
 
-| Field | Accepted Values  |
-|-------|------------------|
-|reportPeriod |<ul><li>Accepted values are:PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH</li><li>Previous Week is Start of Monday previous week to Start of Monday this week, Previous Month is Start of 1st last month to Start of 1st this month.</li></ul>.|
-|status|ENABLED, DISABLED|
-|dailySchedule|TRUE, FALSE|
-|dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
-|dayOfMonth|1-28 or L / L-1 / L-2|
 
 + Parameters
 
@@ -482,6 +482,7 @@ This API uses the subscriptionId returned in response when you subscribe for a r
 + Parameters
 
     + reportId - This is the name of the report. 
+    + subscriptionId -  This is the subscription Id of the report subscription.
 
 + Request Get Subscriptions (application/json)
     
@@ -547,9 +548,7 @@ You can use this API to modify your existing subscriptions. Changes to the Sched
 + Parameters
 
     + reportId - This is the name of the report.<br/><br/> 
-    + preferenceId - This is the unique preferenceId that can be used in a subscription.<br/> **Note:** The preferenceId is an optional field and when provided will apply the preferences created under the preferenceId. Please refer to <em>Preferences</em> for more details.
-    + subscriptionId - This is the subscription id of a report.
-    + scheduleConfig - The scheduleConfig defines if the report should be generated periodically without using the report-request API. 
+    + subscriptionId - This is the subscription id of a report subscription.
    
 + Request Update Subscriptions (application/json)
     
@@ -630,7 +629,8 @@ Click **Unsubscribe from a Report** above to delete a preference to a subscribed
 
 + Parameters
 
-    + subscriptionId : This is the subscription id of a report.
+    + reportId: This is the name of the report.
+    + subscriptionId : This is the subscription id of a report subscription.
     
 
 + Request Unsubscribe to a Report (application/json)
