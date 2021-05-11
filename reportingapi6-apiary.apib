@@ -166,7 +166,11 @@ Click **Get all preferences for a merchant** above to retrieve all preferences o
 
 + Parameters
 
-    + reportId (string, required) - This is the report id of a merchant.
+    + reportId (string, required) - This is the name of the report.
+    + page - This is the page number of the report. 
+    + size - This is the size of the report.
+    + totalItems - This is the total number of items in the report. 
+    + totalPages - This is the total number of pages in the report. 
 
 
 + Request Create all preferences for a Merchant (application/json)
@@ -327,7 +331,7 @@ Click **Get Preferences** above to retrieve a preference to a report using the u
 <a name="putpreference" title="Update a preference for a report"></a>
 Click **Put Preferences** above to update a preference to a report using preferenceId returned in the response from create preference api to [the original request](#updatepreference).
 
-**Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId which is returned when the preference is first created using the create preference API 
+**Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId which is returned when the preference is first created using the create preferences API 
 
     
 + Parameters
@@ -423,6 +427,12 @@ Click **Get All Subscriptions** above to retrieve all the subscriptions for a re
 + Parameters
 
     + reportId (string, required) - This is the name of the report. 
+    + reportId (string, required) - This is the name of the report.
+    + page - This is the page number of the report. 
+    + size - This is the size of the report.
+    + totalItems - This is the total number of items in the report. 
+    + totalPages - This is the total number of pages in the report. 
+
 
 
 + Request Get Subscriptions (application/json)
@@ -497,7 +507,8 @@ The following table describes the list of values for the attributes in this API:
 | Field | Description  |
 |-------|------------------|
 |Name|Optional Field. Stores the readable description for the report subscription.|
-|preferenceId|preferenceId is optional. Attach the preferenceId of preference created if you want to update the default behaviour of report.|
+|preferencesId|preferenceId is optional. Attach the preferenceId of preference created if you want to update the default behaviour of report.|
+|reportId|reportId is optional. This is the name of the report.|
 |scheduleConfig|Fill the section only if you want to schedule a Report.|
 |scheduleConfig.dailySchedule.enabled|true/false|
 |scheduleConfig.monthlySchedule.dayOfMonth|1-28 or L / L-1 / L-2|
@@ -804,6 +815,9 @@ Once you submit a report request, you instantly get an API response that it is a
 <br>
 
 + Parameters
+    
+    + reportId (string, required) - This is the name of the report.
+ 
 
   
 + Request A Report Using a Report id (application/json)
@@ -814,17 +828,7 @@ Once you submit a report request, you instantly get an API response that it is a
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
     
-    + Body
-
-            {
-                "includeFields": [
-                "string"
-                ],
-                "intervalEndTime": 1525744000000,
-                "intervalStartTime": 1525744000000,
-                "reportId": "string",
-                "subscriptionId": "string"
-            }
+    
      
 + Response 200 (application/json) 
 
@@ -837,14 +841,3 @@ Once you submit a report request, you instantly get an API response that it is a
             X-Application-Status-Code: 1000
             X-Application-Error-Message: Internal Error
             X-Application-Error-Description: An internal error occurred
-
-
-    + Body
-
-            {
-              "creationTime": "2020-11-05T06:18:17.368Z",
-              "reportId": "onboarding_report",
-              "intervalStartTime": 1603349877760,
-              "intervalEndTime": 1603349877804,
-              "requestId": "5b1de372-654a-40bf-8fe7-d1412f95d68d"
-             }
