@@ -123,7 +123,7 @@ A Webhook is an HTTP callback that is triggered when an event takes place.
 > **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 Paysafe will attempt a maximum of three times to deliver the report if your webhook is unreachable. You are responsible for ensuring its continued availability.
 
-You will receive the following webhook payload for the specified callback URL. The payload contains a link from where you can download the report. The following payload sample illustrates this: 
+You will receive the following webhook payload for the specified callback URL. Webhook will be delivered within 30 minutes from when the request is accepted. The payload contains a link from where you can download the report. The following payload sample illustrates this: 
 
 ```
 {
@@ -285,7 +285,7 @@ A preference is an additional setting that customizes the generated reports. You
 <a name="getpreference" title="Get a List of Preferences"></a>
 Click **Get Preferences** above to retrieve a preference to a report using the using preferenceId returned in the response from create preference api in the response to [the original request](#GetPreference).
 
-**Note:** Use this API to get a preference using a unique preferenceId. You can get the preferenceId from the response of the Create preference API. It returns a single preference object and not the list of preferences. Please refer to <em> Create Preference</em> for more details.
+**Note:** Use this API to get a preference using a unique preferenceId. You can get the preferenceId from the response of the Create preference API. It returns a single preference object. Please refer to <em> Create Preference</em> for more details.
 
 + Parameters
 
@@ -528,7 +528,8 @@ The following table describes the list of values for the attributes in this API:
 
 
 + Parameters
-
+    
+    + reportId - This is the name of the report. 
    
 
 + Request Subscribe to a Report (application/json)
