@@ -159,7 +159,7 @@ This call returns a status of READY if the API is available.
 ### Get all Preferences for a merchant [GET /reporting/v1/report-configs/{reportId}/preferences]
 
 <a name="getallpreferences" title="Get all preferences for a merchant"></a>
-Click **Get all preferences for a merchant** above to retrieve all preferences on a report for a merchant in response to [the original request](#GetAllPreferences).
+Click **Get all preferences for a merchant** above to retrieve all preferences for a merchant on a particular report in response to [the original request](#GetAllPreferences).
 
 + Parameters
 
@@ -420,7 +420,7 @@ Click **Delete a preference from a Report** above to delete your preference to a
 ### Get all Subscriptions on a report for a Merchant [GET /reporting/v1/report-configs/{reportId}/subscriptions]
 
 <a name="getallsubscriptions" title="Get All Subscriptions"></a>
-Click **Get All Subscriptions** above to retrieve all the subscriptions for a rerport on a merchant.<br/>
+Click **Get All Subscriptions** above to retrieve all the subscriptions for a report on a merchant.<br/>
 
 + Parameters
 
@@ -510,7 +510,7 @@ The following table describes the list of values for the attributes in this API:
 |scheduleConfig|Fill the section only if you want to schedule a Report.|
 |scheduleConfig.dailySchedule.enabled|true/false|
 |scheduleConfig.monthlySchedule.dayOfMonth|1-28 or L / L-1 / L-2|
-|scheduleConfig.reportPeriod|PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/><br/><ul><li>PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH</li><li>PREVIOUS_WEEK : Start of previous week's Monday till this week's Monday</li>,<li>PREVIOUS_MONTH: Start of 1st last month to Start of 1st this month</li></ul>|
+|scheduleConfig.reportPeriod|The report period contains one of the three values: PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/><br/><ul><li>PREVIOUS_DAY: Start of previous day to End of previous day.</li><li>PREVIOUS_WEEK : Start of previous week's Monday till this week's Monday</li><li>PREVIOUS_MONTH: Start of 1st last month to Start of 1st this month</li></ul>|
 |scheduleConfig.status|ENABLED/DISABLED. Resumes/Pauses the schedule.|
 |scheduleConfig.weeklySchedule.dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
 |webhookConfig.webhookUrls|webhookConfig is mandatory. Mention list of webhook endpoints|
@@ -529,8 +529,7 @@ The following table describes the list of values for the attributes in this API:
 
 + Parameters
 
-    + reportId - This is the name of the report. 
-    
+   
 
 + Request Subscribe to a Report (application/json)
         
@@ -675,7 +674,7 @@ This API uses the subscriptionId returned in response when you subscribe for a r
 <a name="putsubscription" title="Create a new Subscription"></a>
 Click **Update Subscriptions** above to update a preferenceId to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
 
-You can use this API to modify your existing subscriptions. Changes to the SchedulConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
+You can use this API to modify your existing subscriptions. Changes to the ScheduleConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
 
 **Notes:** <ul>
     <li> This API updates a single Subscription only.</li>
