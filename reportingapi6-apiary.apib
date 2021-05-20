@@ -5,9 +5,9 @@ HOST: https://api.paysafe.com/reporting/v1/
 
 Paysafe's Reporting API provides endpoints for querying and generating reports based on your payments history. You can extract the data to a report in .csv format. You can retrieve the following reports using the API:
 
-The reports you obtain from Paysafe contains data about your transactions that are more than 24 hours old. 
+The reports you obtain from Paysafe contain data about your transactions that are more than 24 hours old. 
 
-> **Note:** The Ids of each report are in paranthesis. 
+> **Note:** The Ids of each report are in parenthesis. 
 
 For a detailed description on types of reports, please see [<b>Report Types</b>](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/report-types/)
 
@@ -17,12 +17,12 @@ For a detailed description on types of reports, please see [<b>Report Types</b>]
 Below are the prerequisite steps for merchant onboarding:
 
 1. The partner must contact the account manager to set up the account.
-2. Once the account is set up, Paysafe integrations team will provide authentication credentials.
+2. Paysafe integrations team provides the authentication credentials after the merchant account set up is complete.
 
 ### Scope and Restrictions
 
-* All the API's are RESTful.
-* The Direct Merchants and Platform Partners who possess the Shared API key will only be able to use this API.
+* All the APIs are RESTful.
+* The Direct Merchants and Platform Partners who possess the Shared API key will only use this API.
 * Onboarding reports are available only to Partners.
 
 <a name="apikey" title="Authentication"></a>
@@ -33,10 +33,10 @@ and then provide an API key. Your API key looks something like this:
  * Key ID – PartnerXYZ
  * Key Password – B-tst1-0-51ed39e4-312d02345d3f123120881dff9bb4020a89e8ac44cdfdcecd702151182fdc952272661d290ab2e5849e31bb03deede7e
 
-The case-sensitive API key is sent using HTTP Basic Authentication. To use HTTP Basic Authentication, you must send the API key credentials using the Authorization header with every request. The Authorization header is constructed as follows:
+HTTP Basic Authentication sends the case-sensitive API key. To use HTTP Basic Authentication, you must send the API key credentials using the Authorization header with every request. The Authorization header is constructed as follows:
  1. Combine the Key ID and Key Password into a string separated by a colon, for example: “Key ID:Key Password”.
  2. The resulting string literal is then encoded using Base64.
- 3. The authorization method and a space (that is, “Basic”) are added before the encoded string.
+ 3. The authorization method and the space (that is, “Basic”) are added before the encoded string.
 
 For example, using the Key ID and Password examples above, the header is formed as follows:
 
@@ -64,7 +64,7 @@ Once you are satisfied with your integration to the Test environment, you must r
 2. You must have the API Keys for the production environment.
 3. You must use the Production URL for your API calls.
 
-**Note:** For items 1, 2, & 3 reach out to your account manager or <integrations@paysafe.com> for any issues.
+**Note:** For items 1, 2, & 3, reach out to your account manager or <integrations@paysafe.com> for any issues.
 
 ### Production URL
 To process live requests with Paysafe, use the following Production URL:
@@ -90,9 +90,9 @@ For example:
 |-------------|---------------|-------------  |------------|
 |401                |5279           |Invalid Credentials|The authentication credentials are invalid.|
 |403                |5270           |Unauthorized access|Authorization does not contain requested permissions.|
-|400                |5068           |An invalid request was submitted.|Either you submitted a request that is missing a mandatory field or the value of a field does not match the format expected.|
-|404                |5269           |Entity not found|Report does not exist with given id.|
-|500                |1000           |Internal Error|An internal error occured.|
+|400                |5068           |An invalid request was submitted.|Either you submitted a request that is missing a mandatory field, or the value of a field does not match the format expected.|
+|404                |5269           |Entity not found|Report does not exist with the given id.|
+|500                |1000           |Internal Error|An internal error occurred.|
 
 # API-Specific Errors 
 
@@ -104,7 +104,7 @@ For example:
 |400                |5068           |An invalid request was submitted.|intervalStartTime should be less than intervalEndTime|
 |400                |5068           |An invalid request was submitted.|intervalStartTime and intervalEndTime should be between X days.|
 |500                |11006          |Something went wrong!|Something went wrong!|
-|404                |11100          |Subscription does not exit with given id.|Subscription does not exist with given id.|
+|404                |11100          |Subscription does not exist with the given id.|Subscription does not exist with the given id.|
 |400                |11101          |Invalid emailConfig in Subscription.|Email Subscriptions are not yet supported.|
 |400                |11102          |Invalid webhookConfig in Subscription.|Webhook Config should be provided.|
 |400                |11103          |Invalid scheduleConfig in Subscription.|Empty scheduleConfig section is not Accepted. Either enter the scheduleConfig details or remove the section.|
@@ -113,7 +113,7 @@ For example:
 |400                |11106          |Subscriptions active for a given preference.|Can't delete preference when subscriptions are active.|
 |400                |11107          |Invalid scheduleConfig in Subscription.|Unable to determine the scheduleType in scheduleConfig.|
 |404                |11001          |Report does not exist with given id.|Report does not exist with given id.|
-|404                |11201          |Report preference does not exist with given id.|Report preference does not exist with given id.|
+|404                |11201          |Report preference does not exist with the given id.|Report preference does not exist with the given id.|
 |404                |11301          |Invalid intervalStartTime/intervalEndTime in Report Request.|Invalid intervalStartTime/intervalEndTime in Report Request.|
 
 # Webhooks
@@ -192,7 +192,7 @@ Click **Get all preferences for a merchant** above to retrieve all preferences f
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -257,7 +257,7 @@ A preference is an additional setting that customizes the generated reports. You
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -301,7 +301,7 @@ Click **Get Preferences** above to retrieve a preference to a report using the u
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -329,7 +329,7 @@ Click **Get Preferences** above to retrieve a preference to a report using the u
 <a name="putpreference" title="Update a preference for a report"></a>
 Click **Put Preferences** above to update a preference to a report using preferenceId returned in the response from create preference api to [the original request](#updatepreference).
 
-**Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId which is returned when the preference is first created using the create preferences API 
+**Note:** This API allows to update an existing Preference Object created using the create preference API. You will need to have the unique preferenceId, which is returned when the preference is first created using the create preferences API 
 
     
 + Parameters
@@ -356,7 +356,7 @@ Click **Put Preferences** above to update a preference to a report using prefere
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -405,7 +405,7 @@ Click **Delete a preference from a Report** above to delete your preference to a
 
      + Headers
      
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -675,11 +675,11 @@ This API uses the subscriptionId returned in response when you subscribe for a r
 <a name="putsubscription" title="Create a new Subscription"></a>
 Click **Update Subscriptions** above to update a preferenceId to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
 
-You can use this API to modify your existing subscriptions. Changes made to the ScheduleConfig reflects in the next scheduled trigger. The scheduleConfig defines of the report should be generated periodically without using the report-request API. 
+You can use this API to modify your existing subscriptions. Changes made to the ScheduleConfig reflects in the next scheduled trigger. The scheduleConfig of the report should be generated periodically without using the report-request API. 
 
 **Notes:** <ul>
     <li> This API updates a single Subscription only.</li>
-    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
+    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs, the first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
 </ul>
 
 + Parameters
@@ -722,7 +722,7 @@ You can use this API to modify your existing subscriptions. Changes made to the 
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding:chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -780,7 +780,7 @@ Click **Unsubscribe from a Report** above to delete a preference to a subscribed
 
      + Headers
      
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
@@ -832,7 +832,7 @@ Once you submit a report request, you instantly get an API response that it is a
 
     + Headers
     
-            Transfer-Encoding :chunked
+            Transfer-Encoding: chunked
             Date:Tue, 27 Oct 2020 07:19:31 GMT
             X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
             X-Application-Error-Code:  1000
