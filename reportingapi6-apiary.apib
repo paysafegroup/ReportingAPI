@@ -51,9 +51,8 @@ For additional details, refer to [Authentication](https://developer.paysafe.com/
 
 # Getting Started
 
-Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/) for details on Reporting API..... (TBD)
+Click [here](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/getting-started/) for details on Reporting API
 
-**Note to the Engineering Team** This link shall be updated once this project goes live for customers. 
 
 # Going Live
  
@@ -66,7 +65,7 @@ Once you are satisfied with your integration to the Test environment, you must r
 2. You must have the API Keys for the production environment.
 3. You must use the Production URL for your API calls.
 
-**Note:** For items 1, 2, & 3, reach out to your account manager or <integrations@paysafe.com> for any issues.
+> **Note:** For items 1, 2, & 3, reach out to your account manager or <integrations@paysafe.com> for any issues.
 
 ### Production URL
 To process live requests with Paysafe, use the following Production URL:
@@ -181,7 +180,7 @@ The following table describes the list of values for the attributes in this API:
 |scheduleConfig.weeklySchedule.dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
 |webhookConfig.webhookUrls|webhookConfig is mandatory. Mention list of webhook endpoints|
 
-**Notes:** 
+> **Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
     <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports. scheduleConfig is an optional attribute.</li>
@@ -280,7 +279,7 @@ The following table describes the list of values for the attributes in this API:
 Click **Get Subscriptions** above to retrieve a single subscription object.<br/>
 This API uses the subscriptionId returned in response when you subscribe for a report.
 
-**Note:** The changes made to ScheduleConfig will reflect in the next scheduled trigger. 
+> **Note:** The changes made to ScheduleConfig will reflect in the next scheduled trigger. 
     
 + Parameters
 
@@ -343,7 +342,9 @@ Click **Update Subscriptions** above to update a preferenceId to a report using 
 
 You can use this API to modify your existing subscriptions. Changes made to the ScheduleConfig reflects in the next scheduled trigger. The scheduleConfig of the report should be generated periodically without using the report-request API. 
 
-**Notes:** <ul>
+> **Notes:** 
+
+<ul>
     <li> This API updates a single Subscription only.</li>
     <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs, the first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
 </ul>
@@ -473,10 +474,9 @@ The following table describes the list of values for the attributes in this API:
 |reportId|This is mandatory. This is the name of the report.|
 |subscriptionId|This is mandatory. This is the subscription Id of the report subscription.|   
 
-**Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Entering either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
+> **Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Entering either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
 
-Once you submit a report request, you instantly get an API response that it is accepted. Webhook will be delivered within 30 minutes from when the request is accepted.
-<br>
+Once you submit a report request, you instantly get an API response that it is accepted. Webhook will be delivered within 30 minutes from when the request is accepted.<br>
 
 + Parameters
     
