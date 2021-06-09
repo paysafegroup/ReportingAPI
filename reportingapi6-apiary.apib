@@ -166,21 +166,6 @@ Click **Subscribe to a Report** above to create a report subscription.
 
 Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.<br/><br/>
 
-The following table describes the list of values for the attributes in this API:<br/>
-
-| Field | Description  |
-|-------|------------------|
-|Name|Optional Field. Stores the readable description for the report subscription.|
-|preferencesId|preferenceId is optional. Attach the preferenceId of preference created if you want to update the default behaviour of report.|
-|reportId|reportId is optional. This is the name of the report.|
-|scheduleConfig|Fill the section only if you want to schedule a Report.|
-|scheduleConfig.dailySchedule.enabled|true/false|
-|scheduleConfig.monthlySchedule.dayOfMonth|1-28 or L / L-1 / L-2|
-|scheduleConfig.reportPeriod|The report period contains one of the three values: PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/><br/><ul><li>PREVIOUS_DAY: Start of previous day to End of previous day.</li><li>PREVIOUS_WEEK : Start of previous week's Monday till this week's Monday</li><li>PREVIOUS_MONTH: Start of 1st last month to Start of 1st this month</li></ul>|
-|scheduleConfig.status|ENABLED/DISABLED. Resumes/Pauses the schedule.|
-|scheduleConfig.weeklySchedule.dayOfWeek|MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY|
-|webhookConfig.webhookUrls|webhookConfig is mandatory. Mention list of webhook endpoints|
-
 > **Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
@@ -196,8 +181,37 @@ The following table describes the list of values for the attributes in this API:
 + Parameters
     
     + reportId - This is the name of the report. 
-   
+    
++ Attributes
 
+
+    + `preferencesId`: `optional` (string) - Attach the preferenceId of preference created if you want to update the default behaviour of report.
+    
+    + `reportId`: `optional` (string) -  This is the name of the report.
+    
+    + `scheduleConfig`: -  Fill this section only if you want to schedule a report. 
+    
+    + `scheduleConfig.dailySchedule.enabled`: 
+        _true/false_
+        
+    + `scheduleConfig.monthlySchedule.dayOfMonth`:
+        _1-28 or L / L-1 / L-2_
+    
+    + `scheduleConfig.reportPeriod`: - The report period contains one of the three values: PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/>
+    
+        _PREVIOUS DAY: Start of previous day to End of previous day_
+        _PREVIOUS WEEK : Start of previous week's Monday till this week's Monday_
+        _PREVIOUS MONTH: Start of 1st last month to Start of 1st this month_
+
+    + `scheduleConfig.status`: - Resumes/Pauses the schedule.
+        _ENABLED/DISABLED_
+        
+    + `scheduleConfig.weeklySchedule.dayOfWeek` 
+        _MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY_
+        
+    + `webhookConfigwebhookUrls`: `mandatory` (string) - Mentions the list of webhook endpoints.
+        
+   
 + Request Subscribe to a Report (application/json)
         
     + Headers
