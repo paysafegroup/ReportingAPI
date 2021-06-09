@@ -190,31 +190,10 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
     
 + Attributes
 
-    + `preferencesId`: `optional` (string) - Attach the preferenceId of preference created if you want to update the default behavior of report.
+    + `preferenceId`: `optional` (string) - Attach the preferenceId of preference created if you want to update the default behavior of report.
     
-    + `reportId`: `optional` (string) -  This is the name of the report.
-    
-    + `scheduleConfig`: -  Fill this section only if you want to schedule a report. 
-    
-    + `scheduleConfig.dailySchedule.enabled`: 
-        _true/false_
         
-    + `scheduleConfig.monthlySchedule.dayOfMonth`:
-        _1-28 or L / L-1 / L-2_
-    
-    + `scheduleConfig.reportPeriod`: - The report period contains one of the three values: PREVIOUS_DAY, PREVIOUS_WEEK, PREVIOUS_MONTH.<br/>
-    
-        _PREVIOUS DAY: Start of previous day to End of previous day_
-        _PREVIOUS WEEK : Start of previous week's Monday till this week's Monday_
-        _PREVIOUS MONTH: Start of 1st last month to Start of 1st this month_
-
-    + `scheduleConfig.status`: - Resumes/Pauses the schedule.
-        _ENABLED/DISABLED_
-        
-    + `scheduleConfig.weeklySchedule.dayOfWeek` 
-        _MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY_
-        
-    + `webhookConfigwebhookUrls`: `mandatory` (string) - Mentions the list of webhook endpoints.
+    + `webhookConfig.webhookUrls`: `mandatory` (string) - Mentions the list of webhook endpoints.
         
    
 + Request Subscribe to a Report (application/json)
@@ -226,21 +205,6 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
     + Body
 
             {
-                "name": "string",
-                "preferenceId": "string",
-                "scheduleConfig": {
-                "dailySchedule": {
-                "enabled": true
-                },
-                "monthlySchedule": {
-                "dayOfMonth": "string"
-                },
-                "reportPeriod": "PREVIOUS_DAY",
-                "status": "ENABLED",
-                "weeklySchedule": {
-                "dayOfWeek": "MONDAY"
-                }
-            },
             "webhookConfig": {
             "webhookUrls": [
             "string"
