@@ -166,7 +166,7 @@ Click **Subscribe to a Report** above to create a report subscription.
 
 Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.<br/><br/>
 
-> **Notes:** 
+**Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
     <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports. scheduleConfig is an optional attribute.</li>
@@ -175,6 +175,10 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
     <li>preferenceId is optional field. You can overide the behaviour of report by attaching your own preferenceId to subscription request.</li>
 </ul>
+
+**Important**: Using this API, you can also create periodic subscriptions such as: <b>Daily Subscriptions</b>, <b>Weekly Subscriptions</b>, and <b>Monthly Subscriptions</b>. 
+
+See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#createweeklysubscription), and [Monthly Subcription](#createmonthlysubscription) below to learn more on this. 
 
 
 
@@ -285,7 +289,6 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
             ]
 }
 
-### Create Daily Subscription [/report-configs/{reportId}/subscriptions]
 
 #### Create Daily Subscription [POST /report-configs/{reportId}/subscriptions]
 <a name="createdailysubscription" title="Subscribe to Daily Report"></a>
@@ -365,7 +368,6 @@ Use this API to subscribe for daily reports.<br/><br/>
 
 }
 
-### Create Weekly Subscription [/report-configs/reportId/subscriptions]
 
 #### Create Weekly Subscription [POST /report-configs/{reportId}/subscriptions]
 <a name="createweeklysubscription" title="Subscribe to Weekly Report"></a>
@@ -445,7 +447,6 @@ Use this API to subscribe for weekly reports.<br/><br/>
         }
 }
 
-### Create Monthly Subscription [/reportId/subscriptions]
 
 #### Create Monthly Subscription [POST /report-configs/{reportId}/subscriptions]
 <a name="createmonthlysubscription" title="Subscribe to Monthly Report"></a>
