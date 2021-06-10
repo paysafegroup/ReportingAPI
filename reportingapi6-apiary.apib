@@ -169,18 +169,11 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 > **Notes:** 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve, update, and to unsubscribe from report.</li>
-    <li>You can use scheduleConfig to generate daily-reports, weekly-reports, and monthly-reports. scheduleConfig is an optional attribute.</li>
     <li>Only one of section in scheduleConfig should be entered.</li>
     <li>If schedule information is given and enabled, in response nextRun attribute is returned with next trigger time.</li>
     <li>Create subscripiton will only run if scheduleconfig is enabled and all the required details are entered.</li>
     <li>preferenceId is optional field. You can overide the behaviour of report by attaching your own preferenceId to subscription request.</li>
 </ul>
-
-> **Important:**
-
-Using this API, you can also create periodic subscriptions such as: <b>Daily Subscriptions</b>, <b>Weekly Subscriptions</b>, and <b>Monthly Subscriptions</b>. 
-
-See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#createweeklysubscription), and [Monthly Subcription](#createmonthlysubscription) below to learn more on this. 
 
 
 
@@ -202,13 +195,12 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
     + Body
         
             {
-            "webhookInfo":[{
-                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                    "status":"ENABLED"
-                }],
-                    "subscriptionId":"401260_monthly_chargeback_report",
-                    "reportId":"monthly_chargeback_report"
-        }  
+                "webhookConfig": {
+                    "webhookUrls": [
+                    "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+                ]
+                }
+            }
         
 
             
@@ -283,72 +275,6 @@ This API uses the subscriptionId returned in response when you subscribe for a r
                     "reportId":"monthly_chargeback_report"
         }
         
-
-## Update Subscription [/report-configs/{reportId}/subscriptions/{subscriptionId}]
-
-### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
-
-<a name="putsubscription" title="Create a new Subscription"></a>
-Click **Update Subscriptions** above to update a preferenceId to a report using the ID returned in the response to [the original request](#subscribereport).<br/>
-
-You can use this API to modify your existing subscriptions. Changes made to the ScheduleConfig reflects in the next scheduled trigger. The scheduleConfig of the report should be generated periodically without using the report-request API. 
-
-> **Notes:** 
-
-<ul>
-    <li> This API updates a single Subscription only.</li>
-    <li> Each time you pass a webhook URL in the request body, the newest one replaces the older ones. If you pass two webhook URLs, the first time (webhook url1, webhook url2) and then only one the next time (webhook url3), the request body retains the latest one. In this case, webhook url3.</li>  
-</ul>
-
-+ Parameters
-
-    + reportId - This is the name of the report.<br/><br/> 
-    + subscriptionId - This is the subscription id of a report subscription.
-   
-+ Request Update Subscriptions (application/json)
-    
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            
-    + Body
-
-        {
-            "webhookInfo":[{
-                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                    "status":"ENABLED"
-                }],
-                    "subscriptionId":"401260_monthly_chargeback_report",
-                    "reportId":"monthly_chargeback_report"
-        }
-
-
-+ Response 200 (application/json;charset=utf8)
-
-    + Headers
-    
-            Transfer-Encoding:chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
-
-    + Body
-    
-    {
-    "webhookInfo":[
-        {
-            "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-            "status":"ENABLED"
-        }
-    ],
-    "subscriptionId":"401260_monthly_chargeback_report",
-    "reportId":"monthly_chargeback_report"
-}
-    
-
 
 ## Delete Subscription [/report-configs]
 ### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
