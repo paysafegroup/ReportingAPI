@@ -107,15 +107,8 @@ For Example:
 |400                |5068           |An invalid request was submitted.|intervalStartTime and intervalEndTime should be between X days.|
 |500                |11006          |Something went wrong!|Something went wrong!|
 |404                |11100          |Subscription does not exist with the given id.|Subscription does not exist with the given id.|
-|400                |11101          |Invalid emailConfig in Subscription.|Email Subscriptions are not yet supported.|
 |400                |11102          |Invalid webhookConfig in Subscription.|Webhook Config should be provided.|
-|400                |11103          |Invalid scheduleConfig in Subscription.|Empty scheduleConfig section is not Accepted. Either enter the scheduleConfig details or remove the section.|
-|400                |11104          |Invalid scheduleConfig in Subscription.|Only one of the daily, weekly, or monthly schedules can be specified.|
-|400                |11105          |Invalid scheduleConfig in Subscription.|Invalid scheduleConfig in Subscription.|
-|400                |11106          |Subscriptions active for a given preference.|Can't delete preference when subscriptions are active.|
-|400                |11107          |Invalid scheduleConfig in Subscription.|Unable to determine the scheduleType in scheduleConfig.|
 |404                |11001          |Report does not exist with given id.|Report does not exist with given id.|
-|404                |11201          |Report preference does not exist with the given id.|Report preference does not exist with the given id.|
 |404                |11301          |Invalid intervalStartTime/intervalEndTime in Report Request.|Invalid intervalStartTime/intervalEndTime in Report Request.|
 
 # Webhooks
