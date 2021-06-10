@@ -163,6 +163,7 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 
 <ul>
     <li>You have to use this unique subscriptionId to retrieve and to unsubscribe from report.</li>
+    <li>If a request is created for a report which already has a subscription, then, the new request overwrites the existing request.</li>
 </ul>
 
 
@@ -310,7 +311,6 @@ The following table describes the list of values for the attributes in this API:
 
 | Field | Description  |
 |-------|------------------|
-|includeFields|This is optional. These are the list of report headers you need in the report.|
 |intervalStartTime|This is optional.Report start date-time should be provided in milliseconds. Example: 1525744000000.|
 |intervalEndTime|This is optional.Report end date-time should be provided in milliseconds.|
 |reportId|This is mandatory. This is the name of the report.|
