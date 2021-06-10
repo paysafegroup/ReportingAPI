@@ -200,17 +200,15 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
 
     + Body
-
+        
             {
-                "webhookInfo":[
-                    {
-                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                        "status":"ENABLED"
-                    }
-                ],
-                "subscriptionId":"sample_reportId",
-                "reportId":"sample_reportId"
-            }  
+            "webhookInfo":[{
+                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                    "status":"ENABLED"
+                }],
+                    "subscriptionId":"401260_monthly_chargeback_report",
+                    "reportId":"monthly_chargeback_report"
+        }  
         
 
             
@@ -229,19 +227,13 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
    + Body
 
        
-       {
-            
-            {
-                "webhookInfo":[
-                    {
-                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                        "status":"ENABLED"
-                    }
-                ],
-                "subscriptionId":"sample_reportId",
-                "reportId":"sample_reportId"
-            }    
-
+      {
+            "webhookInfo":[{
+                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                    "status":"ENABLED"
+                }],
+                    "subscriptionId":"401260_monthly_chargeback_report",
+                    "reportId":"monthly_chargeback_report"
         }
         
 
@@ -282,20 +274,13 @@ This API uses the subscriptionId returned in response when you subscribe for a r
     
    + Body
 
-       
        {
-            
-            {
-                "webhookInfo":[
-                    {
-                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                        "status":"ENABLED"
-                    }
-                ],
-                "subscriptionId":"sample_reportId",
-                "reportId":"sample_reportId"
-            }    
-
+            "webhookInfo":[{
+                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                    "status":"ENABLED"
+                }],
+                    "subscriptionId":"401260_monthly_chargeback_report",
+                    "reportId":"monthly_chargeback_report"
         }
         
 
@@ -328,22 +313,16 @@ You can use this API to modify your existing subscriptions. Changes made to the 
             
     + Body
 
-       {
-            
-            {
-                "webhookInfo":[
-                    {
-                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                        "status":"ENABLED"
-                    }
-                ],
-                "subscriptionId":"sample_reportId",
-                "reportId":"sample_reportId"
-            }    
-
+        {
+            "webhookInfo":[{
+                    "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                    "status":"ENABLED"
+                }],
+                    "subscriptionId":"401260_monthly_chargeback_report",
+                    "reportId":"monthly_chargeback_report"
         }
-        
-            
+
+
 + Response 200 (application/json;charset=utf8)
 
     + Headers
@@ -357,22 +336,18 @@ You can use this API to modify your existing subscriptions. Changes made to the 
             X-Application-Error-Description: An internal error occurred
 
     + Body
-
-  
-       {
-            
-            {
-                "webhookInfo":[
-                    {
-                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
-                        "status":"ENABLED"
-                    }
-                ],
-                "subscriptionId":"sample_reportId",
-                "reportId":"sample_reportId"
-            }    
-
+    
+    {
+    "webhookInfo":[
+        {
+            "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+            "status":"ENABLED"
         }
+    ],
+    "subscriptionId":"401260_monthly_chargeback_report",
+    "reportId":"monthly_chargeback_report"
+}
+    
 
 
 ## Delete Subscription [/report-configs]
