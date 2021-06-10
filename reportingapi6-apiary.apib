@@ -202,12 +202,16 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
     + Body
 
             {
-            "webhookConfig": {
-            "webhookUrls": [
-            "string"
-            ]
-            }
-        }
+                "webhookInfo":[
+                    {
+                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                        "status":"ENABLED"
+                    }
+                ],
+                "subscriptionId":"sample_reportId",
+                "reportId":"sample_reportId"
+            }  
+        
 
             
 + Response 200 (application/json;charset=utf8)
@@ -222,35 +226,24 @@ See [Daily Subscription](#createdailysubscription), [Weekly Subscription](#creat
             X-Application-Error-Message: Internal Error
             X-Application-Error-Description: An internal error occurred
 
-    + Body
+   + Body
 
+       
+       {
+            
             {
-                "name": "string",
-                "preferenceId": "string",
-                "reportId": "string",
-                "scheduleConfig": {
-                "dailySchedule": {
-                "enabled": true
-                },
-                "monthlySchedule": {
-                "dayOfMonth": "string"
-                },
-                "nextRun": "2021-04-19T10:19:07.879Z",
-                "reportPeriod": "PREVIOUS_DAY",
-                "status": "ENABLED",
-                "weeklySchedule": {
-                "dayOfWeek": "MONDAY"
-                }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
-            {
-            "status": "ENABLED",
-            "url": "string"
-            }
-            ]
-}
+                "webhookInfo":[
+                    {
+                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                        "status":"ENABLED"
+                    }
+                ],
+                "subscriptionId":"sample_reportId",
+                "reportId":"sample_reportId"
+            }    
+
+        }
+        
 
 
 ## Get Subscription [/report - configs]
@@ -286,37 +279,28 @@ This API uses the subscriptionId returned in response when you subscribe for a r
             X-Application-Error-Message: Internal Error
             X-Application-Error-Description: An internal error occurred
 
-    + Body
+    
+   + Body
 
-        {
-            "creationTime": "string",
-            "name": "string",
-            "preferenceId": "string",
-            "reportId": "string",
-            "scheduleConfig": {
-            "dailySchedule": true,
-            "monthlySchedule": {
-            "dayOfMonth": "string"
-            },
-            "nextRun": "2021-04-16T11:47:23.360Z",
-            "reportPeriod": "PREVIOUS_DAY",
-            "status": "ENABLED",
-            "weeklySchedule": {
-            "dayOfWeek": "MONDAY"
-            }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
-                {
-                    "status": "ENABLED",
-                    "url": "string"
-                }
-            ]
+       
+       {
+            
+            {
+                "webhookInfo":[
+                    {
+                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                        "status":"ENABLED"
+                    }
+                ],
+                "subscriptionId":"sample_reportId",
+                "reportId":"sample_reportId"
+            }    
+
         }
-         
+        
 
 ## Update Subscription [/report-configs/{reportId}/subscriptions/{subscriptionId}]
+
 ### Update Subscriptions [PUT /report-configs/{reportId}/subscriptions/{subscriptionId}]
 
 <a name="putsubscription" title="Create a new Subscription"></a>
@@ -343,27 +327,20 @@ You can use this API to modify your existing subscriptions. Changes made to the 
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
             
     + Body
-        {
-            "name": "string",
-            "preferenceId": "string",
-            "scheduleConfig": {
-            "dailySchedule": {
-            "enabled": true
-            },
-            "monthlySchedule": {
-            "dayOfMonth": "string"
-            },
-            "reportPeriod": "PREVIOUS_DAY",
-            "status": "ENABLED",
-            "weeklySchedule": {
-            "dayOfWeek": "MONDAY"
-            }
-        },
-        "webhookConfig": {
-        "webhookUrls": [
-        "string"
-        ]
-        }
+
+       {
+            
+            {
+                "webhookInfo":[
+                    {
+                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                        "status":"ENABLED"
+                    }
+                ],
+                "subscriptionId":"sample_reportId",
+                "reportId":"sample_reportId"
+            }    
+
         }
         
             
@@ -381,31 +358,22 @@ You can use this API to modify your existing subscriptions. Changes made to the 
 
     + Body
 
+  
        {
-            "name": "string",
-            "preferenceId": "string",
-            "reportId": "string",
-            "scheduleConfig": {
-            "dailySchedule": true,
-            "monthlySchedule": {
-            "dayOfMonth": "string"
-                },
-            "nextRun": "2021-04-19T06:52:47.047Z",
-            "reportPeriod": "PREVIOUS_DAY",
-            "status": "ENABLED",
-            "weeklySchedule": {
-            "dayOfWeek": "MONDAY"
-                }
-            },
-            "subscriptionId": "string",
-            "updatedTime": "string",
-            "webhookInfo": [
+            
             {
-            "status": "ENABLED",
-            "url": "string"
-            }
-            ]
-        }   
+                "webhookInfo":[
+                    {
+                        "url":"https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9",
+                        "status":"ENABLED"
+                    }
+                ],
+                "subscriptionId":"sample_reportId",
+                "reportId":"sample_reportId"
+            }    
+
+        }
+
 
 ## Delete Subscription [/report-configs]
 ### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
@@ -454,7 +422,7 @@ The following table describes the list of values for the attributes in this API:
 |intervalStartTime|This is optional.Report start date-time should be provided in milliseconds. Example: 1525744000000.|
 |intervalEndTime|This is optional.Report end date-time should be provided in milliseconds.|
 |reportId|This is mandatory. This is the name of the report.|
-|subscriptionId|This is mandatory. This is the subscription Id of the report subscription.|   
+|subscriptionId|This is the subscription Id of the report subscription.|   
 
 > **Note:** You should specify intervalStartTime & intervalEndTime in milliseconds since epoch. Specify the date in milliseconds format. If you don't, it will default to the interval configured in ReportConfig. You must either specify both the start and end times or nothing at all. Entering either only the start or the end time will throw an error. For reference, you can refer to [milliseconds Converter](https://www.currentmillis.com/)
 
@@ -473,6 +441,15 @@ Once you submit a report request, you instantly get an API response that it is a
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+    + Body
+    
+
+            {
+                "reportId": "monthly_chargeback_report",
+                "intervalStartTime": 1620691200000,
+                "intervalEndTime": 1623283200000
+            }
+
     
     
      
@@ -487,3 +464,14 @@ Once you submit a report request, you instantly get an API response that it is a
             X-Application-Status-Code: 1000
             X-Application-Error-Message: Internal Error
             X-Application-Error-Description: An internal error occurred
+            
+    + Body
+    
+    
+            {
+                "reportId": "monthly_chargeback_report",
+                "intervalStartTime": 1620691200000,
+                "intervalEndTime": 1623283200000,
+                "requestId": "e6b16d18-b5ac-4560-8e44-4ddaface757e",
+                "creationTime": "2021-06-10T08:54:11.043+0000"
+            }
