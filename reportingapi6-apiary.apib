@@ -7,9 +7,7 @@ Paysafe's Reporting API provides endpoints for querying and generating reports b
 
 The reports you obtain from Paysafe contain data about your transactions that are more than 24 hours old. 
 
-> **Note:** The Ids of each report are in parenthesis. 
-
-For a detailed description on types of reports, please see [<b>Report Types</b>](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/report-types/) 
+For a detailed description on types of reports, see [<b>Report Types</b>](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/report-types/) 
 
 # Prerequisites
 <a name="prereq" title="Prerequisites"></a>
@@ -22,7 +20,7 @@ Below are the prerequisite steps for merchant onboarding:
 ### Scope and Restrictions
 
 * All the APIs are RESTful.
-* The Direct Merchants and Platform Partners who possess the Shared API key will only use this API.
+* Only the Direct Merchants and Platform Partners with a Shared API key can use this API.
 * Onboarding reports are available only to Partners. 
 
 
@@ -118,9 +116,11 @@ A Webhook is an HTTP callback that is triggered when an event takes place.
 > **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 Paysafe will attempt a maximum of three times to deliver the report if your webhook is unreachable. You are responsible for ensuring its continued availability.
 
-You will receive the following webhook payload for the specified callback URL. Webhook will be delivered within 30 minutes from when the request is accepted. The payload contains a link from where you can download the report. The following payload sample illustrates this: 
+You will receive the following webhook payload for the specified callback URL. Webhook will be delivered within 30 minutes from when the request is accepted. The payload contains a link from where you can download the report. 
 
-```
+The following payload sample illustrates the payload using which you can download the report: 
+
+```j
 {
   "report": {
     "status": "SUCCEEDED",
