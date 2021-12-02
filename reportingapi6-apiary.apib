@@ -114,9 +114,7 @@ For Example:
 
 ## Use Case # 1 
 
-Public api Subscription request and response sample
-
-<a name="previousweekreport" title="previousweekreport"></a>
+200 status report request sample
 
 ```apib
 
@@ -197,6 +195,44 @@ RESPONSE
     },
     "id": "6dfb96ab-e279-4f81-aae7-5c40b833d5e3",
     "status": "PENDING"
+}
+```
+## Use Case # 3
+
+400 error code for empty interval
+
+```apib
+
+REQUEST
+
+{
+    "columns": [
+        "AuthDate",
+        "DBA"
+    ],
+    "interval": {
+ |   },
+    "reportType": "onboarding_report12345",
+    "timeZone": "EST",
+    "webhook": {
+        "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+    }
+}
+
+```
+
+```apib
+
+RESPONSE
+
+{
+    "error": {
+        "code": "5068",
+        "message": "Field error(s)",
+        "details": [
+            "Provide either interval.type or interval.startDate & interval.endDate"
+        ]
+    }
 }
 ```
 
