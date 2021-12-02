@@ -117,7 +117,7 @@ For Example:
 200 Status: Generate a Report
 
 ```apib
-hanges
+
 REQUEST
     
     {
@@ -266,7 +266,7 @@ The following payload sample illustrates the payload using which you can downloa
 
 # Pagination
 
-In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters  as described in this [section](https://developer.paysafe.com/en/resources-and-support/pagination/).
+In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters  as described in this [section](https://developer.paysafe.com/en/resources-and-support/pagination/).
 
 <a name="globalinvalidcharacters" title="Global Invalid Characters"></a>
 # Global Invalid Characters
@@ -299,7 +299,7 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 > **Notes:** 
 
 <ul>
-    <li>You have to use this unique subscriptionId to retrieve and to unsubscribe from report.</li>
+    <li>You have to use this unique subscriptionId to retrieve a report.</li>
     <li>If a request is created for a report which already has a subscription, then, the new request overwrites the existing request.</li>
 </ul>
 
