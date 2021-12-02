@@ -109,6 +109,97 @@ For Example:
 |404                |11001          |Report does not exist with given id.|Report does not exist with given id.|
 |404                |11301          |Invalid intervalStartTime/intervalEndTime in Report Request.|Invalid intervalStartTime/intervalEndTime in Report Request.|
 
+
+# Use Cases
+
+## Use Case # 1 
+
+Public api Subscription request and response sample
+
+<a name="previousweekreport" title="previousweekreport"></a>
+
+```apib
+
+REQUEST
+    
+    {
+            "columns": [
+            "AuthDate",
+            "DBA"
+        ],
+        "interval": {
+        "type": "PREVIOUS_WEEK"
+        },
+        "reportType": "onboarding_report12345",
+        "timeZone": "EST",
+        "webhook": {
+        "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+        }
+    }
+    
+```
+
+```apib
+
+RESPONSE
+
+    {
+        "reportType": "onboarding_report12345",
+        "timeZone": "EST",
+        "columns": [
+        "AuthDate",
+        "DBA"
+        ],
+        "interval": {
+        "startDate": "2021-11-22T05:00:00Z",
+        "endDate": "2021-11-29T05:00:00Z"
+        },
+        "webhook": {
+        "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+        },
+        "id": "b7715045-633e-4218-a303-056f1ede5196",
+        "status": "PENDING"
+    }
+```
+## Use Case # 2
+
+200 status with minimum requirments 
+
+```apib
+
+REQUEST
+
+{
+    "interval": {
+        "type": "PREVIOUS_WEEK"
+    },
+    "reportType": "onboarding_report12345",
+    "timeZone": "EST",
+    "webhook": {
+        "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+    }
+}
+```
+
+```apib
+
+RESPONSE
+
+{
+    "reportType": "onboarding_report12345",
+    "timeZone": "EST",
+    "interval": {
+        "startDate": "2021-11-22T05:00:00Z",
+        "endDate": "2021-11-29T05:00:00Z"
+    },
+    "webhook": {
+        "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
+    },
+    "id": "6dfb96ab-e279-4f81-aae7-5c40b833d5e3",
+    "status": "PENDING"
+}
+```
+
 # Webhooks
 <a name="webhooks" title="Webhooks"></a>
 A Webhook is an HTTP callback that is triggered when an event takes place. 
@@ -135,6 +226,8 @@ The following payload sample illustrates the payload using which you can downloa
 > **Note:** You can download the reports for a pre-defined period (up to seven days). 
 ```
 
+# Previous Week Report
+
 # Pagination
 
 In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters  as described in this [section](https://developer.paysafe.com/en/resources-and-support/pagination/).
@@ -155,21 +248,6 @@ ISO standards add value by providing the common business process data semantics 
 <li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
 <li><a href="https://www.paysafe.com/paysafegroup/regulatory-disclosures/" target="_blank">Regulatory Disclosures</a></li>
 </ul>
-
-## Verify That the Service Is Accessible [GET /monitor]
-<a name="verifyservice" title="Verify Service"></a>
-
-This call returns a status of READY if the API is available.
-
-+ Response 200 (application/json)
-
-  + Body
-    
-            {
-                "status" : "READY"
-            }
-
-
 
 # Group Subscriptions
 
@@ -291,36 +369,7 @@ This API uses the subscriptionId returned in response when you subscribe for a r
         }
         
 
-## Delete Subscription [/report-configs]
-### Unsubscribe from a Report [DELETE /report-configs/{reportId}/subscriptions/{subscriptionId}]
-<a name="unsubscribereport" title="Unsubscribe a Report"></a>
 
-Click **Unsubscribe from a Report** above to unsubscribe from a report.
-
-+ Parameters
-
-    + reportId: This is the name of the report.
-    + subscriptionId : This is the subscription id of a report subscription.
-    
-
-+ Request Unsubscribe to a Report (application/json)
-
-    + Headers
-
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            
-+ Response 204 (application/json;charset=utf8)
-
-     + Headers
-     
-            Transfer-Encoding: chunked
-            Date:Tue, 27 Oct 2020 07:19:31 GMT
-            X-INTERNAL-CORRELATION-ID: a755ee28-e1dd-4b0a-8b72-955f7ae8a623
-            X-Application-Error-Code:  1000
-            X-Application-Status-Code: 1000
-            X-Application-Error-Message: Internal Error
-            X-Application-Error-Description: An internal error occurred
-            
 # Group Report Requests
 
 ## Submit Report [/report-requests]
