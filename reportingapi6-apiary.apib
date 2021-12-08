@@ -161,7 +161,7 @@ RESPONSE
 ```
 ## Use Case # 2
 
-200 Status: With minimum requirments 
+200 Status: With Minimum Requirments 
 
 ```apib
 
@@ -199,7 +199,7 @@ RESPONSE
 ```
 ## Use Case # 3
 
-400 Error: Empty intervals
+400 Error: Empty Intervals
 
 ```apib
 
@@ -238,7 +238,8 @@ RESPONSE
 
 # Webhooks
 <a name="webhooks" title="Webhooks"></a>
-A Webhook is an HTTP callback that is triggered when an event takes place. 
+
+The URL for webhook is mandatory, as they are user-defined HTTP callbacks. A user creates a URL in their app that is accessible from the public web, which is usually triggered by an event, such as publishing code to a repository (also known as payload).
 
 > **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 Paysafe will attempt a maximum of three times to deliver the report if your webhook is unreachable. You are responsible for ensuring its continued availability.
