@@ -312,8 +312,6 @@ The following payload sample illustrates the payload using which you can downloa
 ```
 > **Note:** You can download the reports for a pre-defined period (up to seven days). 
 
-# Previous Week Report
-
 ## Pagination
 
 In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters  as described in this [section](https://developer.paysafe.com/en/resources-and-support/pagination/).
@@ -443,9 +441,9 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
         
 
 
-## Get Subscription [/report - configs]
+## Get Subscription [/subscriptions]
 
-### Get Subscriptions [GET /report-configs/{reportId}/subscriptions/{subscriptionId}]
+### Get Subscriptions [GET /subscriptions/subscriptionid]
 
 <a name="getsubscription" title="Get a List of Subscriptions"></a>
 Click **Get Subscriptions** above to retrieve a single subscription object.<br/>
