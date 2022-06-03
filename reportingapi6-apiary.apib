@@ -353,7 +353,13 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     <li>You can create unlimited subscriptions for a single report.</li>
 </ul>
     
-+ Attributes
++ Parameters
+
+     + reportType : `onboarding_report` (string).
+     + INTERVAL (required) - Specify the date range as part of the report query it can be either a predefined type or specify a more granular range.
+      + WEBHOOK - Specify the delivery channel details.
+    + webhook.url : `https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9` (string, required) - The webhook url to deliver the report.
+    _Length max=2048_2
     
 + Attributes
     
@@ -391,18 +397,13 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     + Body
         
         {
-            "columns": [
-                "AuthDate",
-                "DBA"
-            ],
-            "interval": {
-                "type": "PREVIOUS_WEEK"
-            },
-            "reportType": "onboarding_report",
-            "timeZone": "EST",
-            "webhook": {
-                "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
-            }
+          "reportType":"balance_change_from_activity.itemized.3",
+          "interval":{
+            "type":"PREVIOUS_DAY"
+          },
+          "webhook":{
+            "url":"https://notify.me.io"
+          }
         }
         
 + Response 200 (application/json;charset=utf8)
@@ -421,23 +422,17 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
 
        
         {
-            "reportType": "onboarding_report",
-            "timeZone": "EST",
-            "columns": [
-                "AuthDate",
-                "DBA"
-            ],
-            "interval": {
-                "startDate": "2021-11-22T05:00:00Z",
-                "endDate": "2021-11-29T05:00:00Z"
-            },
-            "webhook": {
-                "url": "https://webhook.site/26c2d4c8-e036-4a54-9024-5497482f62e9"
-            },
-            "id": "b7715045-633e-4218-a303-056f1ede5196",
+          "id":"262460e4-774d-4bd2-a8a1-dec4ab353d63",
+          "reportType":"balance_change_from_activity.itemized.3",
+          "status":"PENDING",
+          "interval":{
+            "type":"PREVIOUS_DAY"
+          },
+          "webhook":{
+            "url":"https://notify.me.io"
+          }
         }
         
-
 
 ## Get Subscription [/requestId]
 
