@@ -337,25 +337,25 @@ ISO standards add value by providing the common business process data semantics 
 
 # Group Reports
 
-## Create Subscription [/report-request]
+## Create Report Request [/report-request]
 
-## Subscribe to a Report [POST /report-request]
-<a name="subscribereport" title="Subscribe a Report"></a>
+## Request a Report [POST /report-request]
+<a name="requestareport" title="Request a Report"></a>
 
-Click **Subscribe to a Report** above to create a report subscription. 
+Click **Request a Report** above to request a report. 
 
-Use this API to subscribe for reports that you want to be delivered over HTTP endpoint (webhooks). When you subscribe to a report, a unique "subscriptionId" is returned in the response.<br/><br/>
+Use this API to request a report that you want to be delivered over HTTP endpoint (webhooks). When you request a report, a unique "requestId" is returned in the response.<br/><br/>
 
 > **Notes:** 
 
 <ul>
-    <li>You have to use this unique subscriptionId to retrieve a report.</li>
-    <li>You can create unlimited subscriptions for a single report.</li>
+    <li>You have to use this unique requestId to retrieve a report.</li>
+    <li>You can create unlimited report requests for a single report.</li>
 </ul>
     
 + Parameters
 
-     + reportType : `onboarding_report` (string).
+     + reportType : `balance_change_from_activity.itemized.3` (string).
      + INTERVAL (required) - Specify the date range as part of the report query it can be either a predefined type or specify a more granular range.
      + WEBHOOK - Specify the delivery channel details.
      + webhook.url : `https://notify.me.io` (string, required) - The webhook url to deliver the report.
@@ -383,7 +383,9 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
     _enumeration_
     
    
-+ Request Subscribe to a Report (application/json)
++ Request (application/json)
+        
+    Request a Report
         
     + Headers
     
@@ -429,22 +431,22 @@ Use this API to subscribe for reports that you want to be delivered over HTTP en
         }
         
 
-## Get Subscription [/requestId]
+## Get Report Request Details [/requestId]
 
-### Get Subscriptions [GET /report-request/{requestId}]
+### Get Report Request Details [GET /report-request/{requestId}]
 
-<a name="getsubscription" title="Get a List of Subscriptions"></a>
-Click **Get Subscriptions** above to retrieve a single subscription object.<br/>
-This API uses the subscriptionId returned in response when you subscribe for a report.
+<a name="getreportrequestdetails" title="Get Report Request Details"></a>
+Click **Get Report Request Details** above to retrieve a single report object.<br/>
+This API uses the requestId returned in response, when you request for a report.
 
   
 + Parameters
 
     
-    + requestId : `262460e4-774d-4bd2-a8a1-dec4ab353d63` - requestId specifies a number that is assigned by the server to uniquely identify a subscription request to generate a report.
+    + requestId : `262460e4-774d-4bd2-a8a1-dec4ab353d63` - requestId specifies a number that is assigned by the server to uniquely identify a report request to generate a report.
    
 
-+ Request Get Subscriptions (application/json)
++ Request Report Request Details (application/json)
     
     + Headers
     
