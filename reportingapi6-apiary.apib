@@ -3,11 +3,11 @@ HOST: https://api.paysafe.com/reporting/v1/
 
 # Reports API Reference
 
-Paysafe's Reports API provides endpoints for querying and generating reports based on your payments history. You can extract the data to a report in .csv format. You can retrieve the following reports using the API:
+Paysafe's Reports API provides endpoints for querying and generating reports based on your onboarding and payment history. You can extract the data to a report in .csv format.
 
-The reports you obtain from Paysafe contain data about your transactions that are more than 24 hours old. 
+The reports you obtain from Paysafe contain data about your activities/transactions that are more than 24 hours old. 
 
-For a detailed description on types of reports, see [<b>Report Types</b>](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/report-types/) 
+For a detailed description on types of reports, see [<b>Report Types</b>](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/reports-api/report-types/)
 
 # Prerequisites
 <a name="prereq" title="Prerequisites"></a>
@@ -355,7 +355,7 @@ Use this API to request a report that you want to be delivered over HTTP endpoin
     
 + Parameters
 
-     + reportType : `balance_change_from_activity.itemized.3` (string).
+     + reportType : `onboarding` (string), `onboarding_pending` (string), `onboarding_hold_report` (string), `payment_hold_report` (string).
      + INTERVAL (required) - Specify the date range as part of the report query it can be either a predefined type or specify a more granular range.
      + WEBHOOK - Specify the delivery channel details.
      + webhook.url : `https://notify.me.io` (string, required) - The webhook url to deliver the report.
